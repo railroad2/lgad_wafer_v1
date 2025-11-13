@@ -125,6 +125,28 @@ class DrawPad:
         self.d_padoxide = oxide
         return oxide
 
+    def DrawPadILD(self, layer=LAYERS['ILD']):
+        size = self.dim_pad.padmetal_size
+        center = self.dim_pad.padmetal_center
+        optwin_N = self.dim_pad.optwin_N
+        optwin_size = self.dim_pad.optwin_size
+        optwin_pos  = self.dim_pad.optwin_pos
+        ild_offset = self.dim_pad.ild_offset
+
+        ild = pg.rectangle(size=(size[0]-ild_offset*2, size[1]-ild_offset*2), layer=layer)
+        ild.center = center
+
+        for i in range(optwin_N):
+            rect_win = pg.rectangle(size=(optwin_size[i][0]+ild_offset*2, optwin_size[i][1]+ild_offset*2), layer=99)
+            rect_win.center = optwin_pos[i]
+            ild = pg.boolean(ild , rect_win, operation='not', layer=layer)
+            
+        ild.simplify(self.tol)
+
+        self.d_padild = ild
+        return ild 
+        
+
     def Draw(self, center=(0, 0)):
         d_pad = Device('pad')
 

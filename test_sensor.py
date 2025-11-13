@@ -11,10 +11,10 @@ def main():
              'pstop_gap' : 10,
              'gr_width' : (65, 105),
              'Nfg': 2,
-             'rotation': 45,
+             'rotation': 90,
             }
     optout = { 
-              'gain' : False,
+              #'gain' : False,
              }
     sensor = lg.DrawSensor(nx, ny,
                            **pars, **optout,

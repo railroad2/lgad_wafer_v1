@@ -35,3 +35,4 @@ class DimPad:
     pad_size   = (jte_size[0]+jte_width+pstop_gap+pstop_width, jte_size[1]+jte_width+pstop_gap+pstop_width)
     pad_center = (0, 0)
 
+    ild_offset = 1

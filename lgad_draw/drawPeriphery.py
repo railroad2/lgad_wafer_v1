@@ -55,7 +55,7 @@ class DrawPeriphery:
         
         return pstop
 
-    def DrawGR(self, layer=LAYERS['GR'], layer_metal=LAYERS['METAL'], layer_oxide=LAYERS['OXIDE']):
+    def DrawGR(self, layer=LAYERS['GR'], layer_metal=LAYERS['METAL'], layer_oxide=LAYERS['OXIDE'], layer_ild=LAYERS['ILD']):
         bsize = self.dim_per.base_size
         bcenter = self.dim_per.base_center
         gap = self.dim_per.gr_gap
@@ -63,6 +63,8 @@ class DrawPeriphery:
         widthb = self.dim_per.gr_widthb
         center = self.dim_per.gr_center
         pad_offset = self.dim_per.pad_offset
+        ild_offset = self.dim_per.ild_offset
+
 
         # inner rectangle
         rect_base = pg.rectangle(size=bsize, layer=99)
@@ -81,19 +83,28 @@ class DrawPeriphery:
         
         gr = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
 
+        # gr ILD
+        rect_out_0 = pg.offset(rect_out, distance=-ild_offset , join=self.join, layer=99, tolerance=self.tol)
+        rect_in_0  = pg.offset(rect_in,  distance= ild_offset, join=self.join, layer=99, tolerance=self.tol)
+        ild = pg.boolean(rect_out_0, rect_in_0, operation='not', layer=layer_ild)
+        ild.simplify(self.tol)
+
         # gr metal
         rect_out_1 = pg.offset(rect_out, distance= 0, join=self.join, layer=99, tolerance=self.tol)
         rect_in_1  = pg.offset(rect_in,  distance= 0, join=self.join, layer=99, tolerance=self.tol)
         metal = pg.boolean(rect_out_1, rect_in_1, operation='not', layer=layer_metal)
+        metal.simplify(self.tol)
 
         # gr oxide open
         rect_out_2 = pg.offset(rect_out_1, distance=-5, join=self.join, layer=99, tolerance=self.tol)
         rect_in_2  = pg.offset(rect_in_1,  distance= 5, join=self.join, layer=99, tolerance=self.tol)
         oxide = pg.boolean(rect_out_2, rect_in_2, operation='not', layer=layer_oxide)
+        oxide.simplify(self.tol)
 
-        gr << metal
-        gr << oxide
-        gr.simplify(self.tol)
+        gr.add(ild)
+        gr.add(metal)
+        gr.add(oxide)
+        #gr.simplify(self.tol)
         self.d_gr = gr
 
         self.d_outmost = rect_out

@@ -18,6 +18,7 @@ class DimPeriphery:
     gr_boff = 0
     gr_size_in = (0, 0)
     gr_boff_in = 0
+    ild_offset = 1
 
     # floating guard-ring
     fg_gap = 30

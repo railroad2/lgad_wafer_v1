@@ -11,8 +11,8 @@ class DrawSensor:
                 pstop_gap=10, pstop_width=10, 
                 gr_gap=10, gr_width=(65, 105), 
                 Nfg=0, fg_gap=(50, 10), fg_width=30,
-                edge_gap=80,
-                gain=True, nplus=True, jte=True, padmetal=True, padoxide=True,
+                edge_gap=80, ild_offset=1,
+                gain=True, nplus=True, jte=True, padild=True, padmetal=True, padoxide=True,
                 pstop=True, guardring=True, edge=True, 
                 rounding=True, tol=0.1, print_progress=False, 
                 sensor_name=None, reticle_name=None, layers=None, rotation=0):
@@ -27,10 +27,12 @@ class DrawSensor:
         dim_pad.jte_width = jte_width
         dim_pad.pstop_gap = pstop_gap
         dim_pad.pstop_width = pstop_width
+        dim_pad.ild_offset = ild_offset
 
         # set dimensions for periphery
         dim_per = lg.DimPeriphery(nx, ny, dim_pad)
         dim_per.gr_gap = gr_gap
+        dim_per.ild_offset = ild_offset
 
         if isinstance(gr_width, (list, tuple)):
             dim_per.gr_width, dim_per.gr_widthb = gr_width
@@ -95,10 +97,17 @@ class DrawSensor:
             d_pstop1 = draw_pad.DrawPstop(layer=LAYERS['PSTOP'])
             pad0.add(d_pstop1)
             if print_progress: print ('pstop is drawn')
+
+        if padild:
+            d_padild = draw_pad.DrawPadILD(layer=LAYERS['ILD'])
+            pad0.add(d_padild) 
+            if print_progress: print ('pad ild is drawn.')
+
         if padmetal:
             d_padme = draw_pad.DrawPadMetal(layer=LAYERS['METAL'])
             pad0.add(d_padme) 
             if print_progress: print ('pad metal is drawn.')
+
         if padoxide:
             d_padox = draw_pad.DrawPadOxide(layer=LAYERS['OXIDE'])
             pad0.add(d_padox) 

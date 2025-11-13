@@ -59,7 +59,7 @@ def make():
     if len(sys.argv) > 1:
         sensor_prefix = sys.argv[1]
     else:
-        sensor_prefix = "LGAD"
+        sensor_prefix = "KNU LGAD v1"
 
     dic = {}
     dic["RETICLENAME"] = "template"
@@ -68,15 +68,15 @@ def make():
     dic["BOUNDMARGIN"] = [250, 250]
     dic["PADGAP"]      = [100, 100]
     dic["LAYERNUM"] = {
-            "JTE"  : 1,
-            "GR"   : 1, 
-            "FGR"  : 1, 
-            "GAIN" : 2,
-            "NPLUS": 3,
-            "PSTOP": 4,
-            "ILD"  : 5,
+            "JTE"  : (1, 1),
+            "GR"   : (1, 1),
+            "FGR"  : (1, 1),
+            "GAIN" : (2, 1),
+            "NPLUS": (3, 1),
+            "PSTOP": (4, 1),
+            "ILD"  : (5, 1),
             "METAL": 6,
-            "OXIDE": 7,
+            "OXIDE": (7, 1),
             "AKEY" : 10,
             "WAFER": 80,
             "AUX"  : 81
@@ -94,6 +94,7 @@ def make():
             "fg_gap"     : [40, 20],
             "fg_width"   : 30,
             "edge_gap"   : 80,
+            "ild_offset" : 2,
             "rounding"   : True,
             "rotation"   : 0
         }
