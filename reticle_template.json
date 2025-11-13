@@ -42,6 +42,7 @@
         "guardring": true,
         "edge": true
     },
+    "SENSORPREFIX": "KNU LGAD v1",
     "SENSORS": [
         {
             "NUM": 1,

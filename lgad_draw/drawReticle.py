@@ -53,17 +53,18 @@ class DrawReticle:
         return self.d_reticle
              
     def Draw_from_json(self, fname):
-        data = self.ReadJson(fname)
+        jdata = self.ReadJson(fname)
 
-        reticle_name    = data["RETICLENAME"]
-        boundary_size   = data["RETICLESIZE"]
-        boundary_margin = data["BOUNDMARGIN"]
-        pad_gap         = data["PADGAP"]
-        LAYERS          = data["LAYERNUM"]
-        paramdefault    = data["PARAMDEFAULT"]
-        layerdefault    = data["LAYERDEFAULT"]
+        reticle_name    = jdata["RETICLENAME"]
+        boundary_size   = jdata["RETICLESIZE"]
+        boundary_margin = jdata["BOUNDMARGIN"]
+        pad_gap         = jdata["PADGAP"]
+        LAYERS          = jdata["LAYERNUM"]
+        paramdefault    = jdata["PARAMDEFAULT"]
+        layerdefault    = jdata["LAYERDEFAULT"]
+        prefix          = jdata["SENSORPREFIX"]
     
-        sensors_info    = data["SENSORS"]
+        sensors_info    = jdata["SENSORS"]
 
         rect_boundary = pg.rectangle(self.boundary_size, layer=LAYERS['AUX'])
         rect_boundary.center = (0, 0)
@@ -77,8 +78,8 @@ class DrawReticle:
             if i != num - 1:
                 print (f"[WARNING] the index ({i}) and the sensor number ({num}-1) are inconsistent!")
 
-            sensor_name = info["NAME"]
             center = info["CENTER"]
+            sensor_name = info["NAME"]
 
             params = paramdefault.copy()
             layeropt = layerdefault.copy()
@@ -88,6 +89,9 @@ class DrawReticle:
              
             for key, val in info['LAYEROPTOUT'].items():
                 layeropt[key] = val
+
+            if sensor_name == "":
+                sensor_name = self.ConstructSensorName(prefix, params, layeropt)
 
             # draw the sensor!
             sensor = lg.DrawSensor(**params, **layeropt, 
@@ -106,7 +110,23 @@ class DrawReticle:
 
     def ReadJson(self, fname):
         with open(fname, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data
+            jdata = json.load(f)
+        return jdata
 
-    
+    def ConstructSensorName(self, prefix, params, layeropt): 
+        nx = params["nx"]
+        ny = params["ny"]
+        Nfg = params["Nfg"]
+        lgadpin = "L" if layeropt["gain"] else "P"
+        jte_width = params["jte_width"]
+        pstop_width = params["pstop_width"]
+
+        sname = prefix
+        sname += f' -{nx}x{ny}'
+        sname += f' -{lgadpin}'
+        sname += f' -F{Nfg}'
+        sname += f' -J{jte_width}'
+        sname += f' -P{pstop_width}'
+
+        return sname
+

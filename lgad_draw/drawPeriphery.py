@@ -82,8 +82,8 @@ class DrawPeriphery:
         gr = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
 
         # gr metal
-        rect_out_1 = pg.offset(rect_out, distance=-5, join=self.join, layer=99, tolerance=self.tol)
-        rect_in_1  = pg.offset(rect_in,  distance= 5, join=self.join, layer=99, tolerance=self.tol)
+        rect_out_1 = pg.offset(rect_out, distance= 0, join=self.join, layer=99, tolerance=self.tol)
+        rect_in_1  = pg.offset(rect_in,  distance= 0, join=self.join, layer=99, tolerance=self.tol)
         metal = pg.boolean(rect_out_1, rect_in_1, operation='not', layer=layer_metal)
 
         # gr oxide open
@@ -167,7 +167,7 @@ class DrawPeriphery:
         if oxide_open:
             oxopen = Device('edge_oxide_open')
             size = (100, 100)
-            oxopen1 = pg.rectangle(size, layer=99)
+            oxopen1 = pg.rectangle(size, layer=layer_oxide)
 
             ref1 = oxopen.add_ref(oxopen1)
             ref2 = oxopen.add_ref(oxopen1)

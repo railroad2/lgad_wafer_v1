@@ -4,13 +4,13 @@ import pylab as plt
 import lgad_draw as lg
 
 def draw_reticle():
-
     reticle = lg.DrawReticle('test')
     
     if len(sys.argv) > 1:
         jsonname = sys.argv[1]
     else:
         jsonname = './reticle_template.json'
+        print (f'[INFO] Using json file : {jsonname}', file=sys.stderr)
 
     d_reticle = reticle.Draw_from_json(jsonname)
 

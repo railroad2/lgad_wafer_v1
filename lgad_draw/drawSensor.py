@@ -56,6 +56,7 @@ class DrawSensor:
             draw_pad.join = draw_per.join = 'miter'
 
         if print_progress: print ('Drawing start')
+
         sensor = Device(f'sensor_{nx}x{ny}')
         pad0   = Device('pad0')
         per0   = Device('per0')

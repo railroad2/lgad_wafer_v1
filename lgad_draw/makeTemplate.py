@@ -1,3 +1,4 @@
+import sys
 import json
 import re
 
@@ -55,6 +56,11 @@ centers = [
 
 
 def make():
+    if len(sys.argv) > 1:
+        sensor_prefix = sys.argv[1]
+    else:
+        sensor_prefix = "LGAD"
+
     dic = {}
     dic["RETICLENAME"] = "template"
     dic["DESCRIPTION"] = "Template"
@@ -99,7 +105,7 @@ def make():
             "guardring": True,
             "edge": True
         }
-
+    dic["SENSORPREFIX"] = sensor_prefix
     dic["SENSORS"] = []
 
     dic_sensor = {
@@ -145,8 +151,10 @@ def make():
                 "ny": ny,
                 "center": dic_sensor["CENTER"]
             }
+
             if rotation:
                 dic_sensor["PARAMETERS"]["rotation"] = 90
+
             dic["SENSORS"].append(dic_sensor.copy()) 
 
     js = json.dumps(dic, indent=4) 
@@ -155,6 +163,7 @@ def make():
     replacement = r'[\1, \2]'
 
     js1 = re.sub(pattern, replacement, js)
+    print (js1)
 
     with open("reticle_template.json", "w", encoding="utf-8") as f:
         f.write(js1) 
