@@ -1,0 +1,112 @@
+import numpy as np
+import json
+
+import phidl.geometry as pg
+from phidl import Device
+
+import lgad_draw as lg
+
+class DrawReticle:
+    boundary_size   = (19640, 19640)
+    boundary_margin = (250, 250)
+    pad_gap         = (100, 100)
+
+    d_reticle = None
+    
+    def __init__(self, dname='reticle'):
+        self.d_reticle = Device(dname)
+
+    def DrawBoundary(self):
+        rect_boundary = pg.rectangle(self.boundary_size, layer=80)
+        self.d_reticle.add(rect_boundary)
+
+    def Draw_raw(self):
+        from .reticle_setup import ssetup
+        boundary_margin = np.array(self.boundary_margin)
+        pad_gap = np.array(self.pad_gap)
+        rect_boundary = pg.rectangle(self.boundary_size, layer=80)
+        rect_boundary.center = (self.boundary_size[0]/2, -self.boundary_size[1]/2)
+
+        self.d_reticle.add(rect_boundary)
+
+        pos = [boundary_margin[0], -boundary_margin[1]]
+
+        for i, row in enumerate(ssetup[:]):
+            for j, col in enumerate(row):
+                sensor = lg.DrawSensor(**col)
+
+                if j == 0:
+                    pos[0] += sensor.xsize/2
+                    pos[1] -= sensor.ysize/2
+                else:
+                    pos[0] += sensor0.xsize/2 + sensor.xsize/2 + pad_gap[0]
+
+                sensor.center = pos
+                print (i, j, sensor.center, self.d_reticle.center)
+                self.d_reticle.add(sensor)
+                sensor0 = sensor
+
+            pos[1] = pos[1] - sensor.ysize/2 - pad_gap[1]
+            pos[0] = boundary_margin[0] 
+        
+        self.d_reticle.center = (0, 0)
+        return self.d_reticle
+             
+    def Draw_from_json(self, fname):
+        data = self.ReadJson(fname)
+
+        reticle_name    = data["RETICLENAME"]
+        boundary_size   = data["RETICLESIZE"]
+        boundary_margin = data["BOUNDMARGIN"]
+        pad_gap         = data["PADGAP"]
+        LAYERS          = data["LAYERNUM"]
+        paramdefault    = data["PARAMDEFAULT"]
+        layerdefault    = data["LAYERDEFAULT"]
+    
+        sensors_info    = data["SENSORS"]
+
+        rect_boundary = pg.rectangle(self.boundary_size, layer=LAYERS['AUX'])
+        rect_boundary.center = (0, 0)
+
+        self.d_reticle.add(rect_boundary)
+
+        for i, info in enumerate(sensors_info):
+            num = info["NUM"]
+            idx = info["INDEX"]
+
+            if i != num - 1:
+                print (f"[WARNING] the index ({i}) and the sensor number ({num}-1) are inconsistent!")
+
+            sensor_name = info["NAME"]
+            center = info["CENTER"]
+
+            params = paramdefault.copy()
+            layeropt = layerdefault.copy()
+
+            for key, val in info['PARAMETERS'].items():
+                params[key] = val
+             
+            for key, val in info['LAYEROPTOUT'].items():
+                layeropt[key] = val
+
+            # draw the sensor!
+            sensor = lg.DrawSensor(**params, **layeropt, 
+                                   sensor_name=sensor_name, reticle_name=reticle_name)
+
+            sensor.center = center
+            self.d_reticle.add(sensor)
+
+            print (f"Sensor #{num} of {idx} is added at {center}")
+        
+        self.d_reticle.center = (0, 0)
+        return self.d_reticle
+
+    def Draw(self, fname=None):
+        return self.Draw_from_json(fname)
+
+    def ReadJson(self, fname):
+        with open(fname, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+
+    
