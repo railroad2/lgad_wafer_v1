@@ -55,7 +55,7 @@ class DrawPeriphery:
         
         return pstop
 
-    def DrawGR(self, layer=LAYERS['GR'], layer_metal=LAYERS['METAL'], layer_oxide=LAYERS['OXIDE'], layer_ild=LAYERS['ILD']):
+    def DrawGR(self, layer=LAYERS['JTE'], layer_metal=LAYERS['METAL'], layer_oxide=LAYERS['OXIDE'], layer_ild=LAYERS['ILD']):
         bsize = self.dim_per.base_size
         bcenter = self.dim_per.base_center
         gap = self.dim_per.gr_gap
@@ -111,7 +111,7 @@ class DrawPeriphery:
 
         return gr
 
-    def DrawFGs(self, Nfg=2, layer=LAYERS['GR']):
+    def DrawFGs(self, Nfg=2, layer=LAYERS['JTE']):
         d_fgs = Device('fgs')
 
         if Nfg == 0:

@@ -1,4 +1,3 @@
-import numpy as np
 import json
 
 import phidl.geometry as pg
@@ -7,7 +6,7 @@ from phidl import Device
 import lgad_draw as lg
 
 class DrawReticle:
-    boundary_size   = (19640, 19640)
+    boundary_size   = (19140, 19140)
     boundary_margin = (250, 250)
     pad_gap         = (100, 100)
 
@@ -18,8 +17,8 @@ class DrawReticle:
 
     def Draw_raw(self):
         from .reticle_setup import ssetup
-        boundary_margin = np.array(self.boundary_margin)
-        pad_gap = np.array(self.pad_gap)
+        boundary_margin = self.boundary_margin
+        pad_gap = self.pad_gap
         rect_boundary = pg.rectangle(self.boundary_size, layer=80)
         rect_boundary.center = (self.boundary_size[0]/2, -self.boundary_size[1]/2)
 
@@ -63,11 +62,11 @@ class DrawReticle:
         sensors_info    = jdata["SENSORS"]
 
         rect_boundary = pg.rectangle(self.boundary_size, layer=LAYERS['AUX'])
-        rect_in = pg.rectangle((self.boundary_size[0]-self.boundary_margin[0]*2, 
-                                self.boundary_size[1]-self.boundary_margin[1]*2), layer=99)
-        rect_in.center = (0, 0)
+        rect_out = pg.rectangle((self.boundary_size[0]+self.boundary_margin[0]*2, 
+                                self.boundary_size[1]+self.boundary_margin[1]*2), layer=99)
+        rect_out.center = (0, 0)
         rect_boundary.center = (0, 0)
-        rect_boundary = pg.boolean(rect_boundary, rect_in, operation='not', layer=LAYERS['AUX'])
+        rect_boundary = pg.boolean(rect_out, rect_boundary, operation='not', layer=LAYERS['AUX'])
 
         self.d_reticle.add(rect_boundary)
 

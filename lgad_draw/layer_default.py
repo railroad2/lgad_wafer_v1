@@ -1,8 +1,8 @@
 #layer definitions
 LAYERNUM = {
             "JTE"  : (1, 1),
-            "GR"   : (1, 1),
-            "FGR"  : (1, 1),
+            #"GR"   : (1, 1),
+            #"FGR"  : (1, 1),
             "GAIN" : (2, 1),
             "NPLUS": (3, 1),
             "PSTOP": (4, 1),

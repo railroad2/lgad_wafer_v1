@@ -64,13 +64,13 @@ def make():
     dic = {}
     dic["RETICLENAME"] = "template"
     dic["DESCRIPTION"] = "Template"
-    dic["RETICLESIZE"] = [19640, 19640]
+    dic["RETICLESIZE"] = [19140, 19140]
     dic["BOUNDMARGIN"] = [250, 250]
     dic["PADGAP"]      = [100, 100]
     dic["LAYERNUM"] = {
             "JTE"  : (1, 1),
-            "GR"   : (1, 1),
-            "FGR"  : (1, 1),
+            #"GR"   : (1, 1),
+            #"FGR"  : (1, 1),
             "GAIN" : (2, 1),
             "NPLUS": (3, 1),
             "PSTOP": (4, 1),

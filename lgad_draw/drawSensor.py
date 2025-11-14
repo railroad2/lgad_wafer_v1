@@ -64,13 +64,13 @@ class DrawSensor:
         per0   = Device('per0')
 
         if guardring:
-            d_gr    = draw_per.DrawGR(layer=LAYERS['GR'], 
+            d_gr    = draw_per.DrawGR(layer=LAYERS['JTE'], 
                                       layer_metal=LAYERS['METAL'], 
                                       layer_oxide=LAYERS['OXIDE'])
             per0.add(d_gr) 
             if print_progress: print ('Guard-ring is drawn.')
         if Nfg:
-            d_fgs   = draw_per.DrawFGs(Nfg, layer=LAYERS['FGR'])
+            d_fgs   = draw_per.DrawFGs(Nfg, layer=LAYERS['JTE'])
             per0.add(d_fgs) 
             if print_progress: print ('Floating guard-ring is drawn.')
         if edge:
