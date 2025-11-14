@@ -59,10 +59,11 @@ class DrawSensor:
 
         if print_progress: print ('Drawing start')
 
-        sensor = Device(f'sensor_{nx}x{ny}')
-        pad0   = Device('pad0')
-        per0   = Device('per0')
+        sensor = Device(f'{nx}x{ny}')
+        pad0   = Device('pad')
+        per0   = Device('per')
 
+        # periphery
         if guardring:
             d_gr    = draw_per.DrawGR(layer=LAYERS['JTE'], 
                                       layer_metal=LAYERS['METAL'], 
@@ -81,6 +82,7 @@ class DrawSensor:
             per0.add(d_edge) 
             if print_progress: print ('Edge is drawn.')
 
+        # pad
         if gain: 
             d_gain  = draw_pad.DrawGain(layer=LAYERS['GAIN'])
             pad0.add(d_gain) 
@@ -122,7 +124,7 @@ class DrawSensor:
                 k += 1
 
         per0.center = sensor.center
-        sensor << per0
+        sensor.add_ref(per0)
         
         sensor.center = center
         if rotation:

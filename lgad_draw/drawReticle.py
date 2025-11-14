@@ -58,6 +58,7 @@ class DrawReticle:
         paramdefault    = jdata["PARAMDEFAULT"]
         layerdefault    = jdata["LAYERDEFAULT"]
         prefix          = jdata["SENSORPREFIX"]
+        blank_name      = jdata["BLANKNAME"]
     
         sensors_info    = jdata["SENSORS"]
 
@@ -68,7 +69,7 @@ class DrawReticle:
         rect_boundary.center = (0, 0)
         rect_boundary = pg.boolean(rect_out, rect_boundary, operation='not', layer=LAYERS['AUX'])
 
-        self.d_reticle.add(rect_boundary)
+        self.d_reticle.add_ref(rect_boundary)
 
         for i, info in enumerate(sensors_info):
             num = info["NUM"]
@@ -96,11 +97,11 @@ class DrawReticle:
             sensor = lg.DrawSensor(**params, **layeropt, 
                                    sensor_name=sensor_name, reticle_name=reticle_name,
                                    layers=LAYERS)
-
+            sensor.name = f'sensor_{i:03}_{sensor.name.split("_")[-1]}'
             sensor.center = center
-            self.d_reticle.add(sensor)
+            self.d_reticle.add_ref(sensor)
 
-            print (f"Sensor #{num} of {idx} is added at {center}")
+            print (f"   [DrawReticle] Sensor #{num:02} of {idx} is added at {center}")
         
         self.d_reticle.center = (0, 0)
         return self.d_reticle
@@ -117,13 +118,13 @@ class DrawReticle:
         nx = params["nx"]
         ny = params["ny"]
         Nfg = params["Nfg"]
-        lgadpin = "L" if layeropt["gain"] else "P"
+        lgadpin = "LGAD" if layeropt["gain"] else "PIN"
         jte_width = params["jte_width"]
         pstop_width = params["pstop_width"]
 
-        sname = prefix
+        sname = f'{lgadpin}' 
         sname += f' -{nx}x{ny}'
-        sname += f' -{lgadpin}'
+        #sname += f' -{lgadpin}'
         sname += f' -F{Nfg}'
         sname += f' -J{jte_width}'
         sname += f' -P{pstop_width}'

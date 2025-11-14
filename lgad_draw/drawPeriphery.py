@@ -130,7 +130,7 @@ class DrawPeriphery:
             rect_out  = pg.offset(base, distance=gap[0]+width+(gap[1]+width)*i, join=self.join, layer=99, tolerance=self.tol)
 
             fg = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
-            d_fgs << fg
+            d_fgs.add(fg)
 
         d_fgs.center = center
         d_fgs.simplify(self.tol)
@@ -185,15 +185,11 @@ class DrawPeriphery:
             ref4 = oxopen.add_ref(oxopen1)
 
             ref1.center = (edge.xmin + 10 + size[0]/2, edge.ymin + 10 + size[1]/2)
-
             ref2.center = (edge.xmin + 10 + size[0]/2, edge.ymax - 10 - size[1]/2)
-
             ref3.center = (edge.xmax - 10 - size[0]/2, edge.ymax - 10 - size[1]/2)
-
             ref4.center = (edge.xmax - 10 - size[0]/2, edge.ymin + 10 + size[1]/2)
 
             edge.add(oxopen)
-
 
         edge.simplify(self.tol)
         self.d_edge = edge
@@ -210,10 +206,10 @@ class DrawPeriphery:
         print ('DrawFGs')
         self.DrawEdge()
 
-        d_per.add(self.d_pstop)
-        d_per.add(self.d_gr)
-        d_per.add(self.d_fgs)
-        d_per.add(self.d_edge)
+        d_per.add_ref(self.d_pstop)
+        d_per.add_ref(self.d_gr)
+        d_per.add_ref(self.d_fgs)
+        d_per.add_ref(self.d_edge)
 
         self.d_per = d_per
         return d_per
