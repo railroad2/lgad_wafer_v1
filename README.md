@@ -8,7 +8,7 @@
 
 1. Make a json template
 
-`$ python3 lgad_draw/makeTemplate.py <sensor name prefix>`
+`$ python3 lgad_draw/makeReticleTemplate.py <sensor name prefix (optional)>`
 
 2. Modify the json file as you need.
 
@@ -16,4 +16,15 @@
 
 `$ python3 draw_reticle.py <json file name>`
 
+## Drawing a wafer
+
+1. Make a wafer template
+
+`$ python3 lgad_draw/makeWaferTemplate.py`
+
+2. Modify the json file as you need.
+
+3. Run
+
+`$ python3 draw_wafer.py <json file name>`
 
