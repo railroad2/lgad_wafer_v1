@@ -1,10 +1,11 @@
 {
-    "RETICLENAME": "Reticle_C",
-    "RETICLETYPE": "Reticle_C",
-    "DESCRIPTION": "Partically diced reticle for KNU LGAD v1",
+    "RETICLENAME": "D",
+    "RETICLETYPE": "D",
+    "DESCRIPTION": "The reticle with align keys",
     "RETICLESIZE": [19140, 19140],
     "BOUNDMARGIN": [250, 250],
     "BLANKNAME"  : true,
+    "BLANKSIZE" : [1500, 150],
     "PADGAP": [100, 100],
     "LAYERNUM": {
         "AKEY": 1,
@@ -27,7 +28,7 @@
         "pstop_width": 10,
         "gr_gap": 25,
         "gr_width": [65, 105],
-        "Nfg": 1,
+        "Nfg": 0,
         "fg_gap": [40, 20],
         "fg_width": 30,
         "edge_gap": 80,
@@ -361,32 +362,6 @@
             "LAYEROPTOUT": {}
         },
         {
-            "NUM": 25,
-            "NAME": "",
-            "INDEX": "(4, 4)",
-            "SIZE": [2100, 2100],
-            "CENTER": [-1920, 1920],
-            "PARAMETERS": {
-                "nx": 1,
-                "ny": 1,
-                "center": [-1920, 1920]
-            },
-            "LAYEROPTOUT": {}
-        },
-        {
-            "NUM": 26,
-            "NAME": "",
-            "INDEX": "(4, 5)",
-            "SIZE": [3380, 2100],
-            "CENTER": [920, 1920],
-            "PARAMETERS": {
-                "nx": 2,
-                "ny": 1,
-                "center": [920, 1920]
-            },
-            "LAYEROPTOUT": {}
-        },
-        {
             "NUM": 27,
             "NAME": "",
             "INDEX": "(4, 6)",
@@ -451,33 +426,6 @@
                 "ny": 1,
                 "center": [-4120, -920],
                 "rotation": 90
-            },
-            "LAYEROPTOUT": {}
-        },
-        {
-            "NUM": 32,
-            "NAME": "",
-            "INDEX": "(5, 4)",
-            "SIZE": [3380, 2100],
-            "CENTER": [-1920, -920],
-            "PARAMETERS": {
-                "nx": 2,
-                "ny": 1,
-                "center": [-1920, -920],
-                "rotation": 90
-            },
-            "LAYEROPTOUT": {}
-        },
-        {
-            "NUM": 33,
-            "NAME": "",
-            "INDEX": "(5, 5)",
-            "SIZE": [3380, 3380],
-            "CENTER": [920, -920],
-            "PARAMETERS": {
-                "nx": 2,
-                "ny": 2,
-                "center": [920, -920]
             },
             "LAYEROPTOUT": {}
         },

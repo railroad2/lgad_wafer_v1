@@ -140,7 +140,8 @@ class DrawPeriphery:
         
         return d_fgs
 
-    def DrawEdge(self, sensor_name=None, reticle_name=None, fontsize=60, 
+    def DrawEdge(self, sensor_name=None, reticle_name=None, 
+                 reticle_name_blank=False, blank_size=None, fontsize=60, 
                  layer=LAYERS['METAL'], oxide_open=True, layer_oxide=LAYERS['OXIDE']):
         size = self.dim_per.edge_size
         center = self.dim_per.edge_center
@@ -157,7 +158,8 @@ class DrawPeriphery:
 
         edge = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
         edge.center = center
-
+        
+        # sensor name
         if sensor_name is None or sensor_name == "":
             sname = pg.text(text = self.dim_per.sensor_name, size=fontsize, justify='center', layer=layer)
         else:
@@ -165,14 +167,24 @@ class DrawPeriphery:
 
         sname.center = (edge.x, edge.ymax - width/2)
         edge = pg.boolean(edge, sname, operation='not', layer=layer)
-
-        if reticle_name is None or sensor_name == "":
+        
+        # reticle name
+        if reticle_name is None or reticle_name == "":
             pass
         else:
             rname = pg.text(text = reticle_name, size=fontsize, justify='center', layer=layer)
             rname.rotate(90)
             rname.center = (edge.xmin + width/2, edge.y)
             edge = pg.boolean(edge, rname, operation='not', layer=layer)
+        
+        # reticle name blank
+        if reticle_name_blank:
+            if blank_size is None:
+                blank_size = self.dim_per.blank_size
+            rname_rect = pg.rectangle(size=blank_size, layer=layer)
+            rname_rect.rotate(90)
+            rname_rect.center = (edge.xmin + blank_size[1]/2, edge.y)
+            edge = pg.boolean(edge, rname_rect, operation='not', layer=layer)
 
         if oxide_open:
             oxopen = Device('edge_oxide_open')

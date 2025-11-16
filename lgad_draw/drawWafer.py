@@ -1,8 +1,10 @@
 import os
 import json
 
+import numpy as np
+
 from phidl import geometry as pg
-from phidl import Device
+from phidl import Device, LayerSet
 
 import lgad_draw as lg
 from .layer_default import LAYERNUM
@@ -58,7 +60,6 @@ class DrawWafer:
 
                 print (rect1.center)
 
-
         return d_reticles_boundary
         
     def PlaceReticles(self):
@@ -83,31 +84,72 @@ class DrawWafer:
         return D_reticles
 
     def PlaceReticles_from_json(self, jsonname):
-        js = self.ReadJson(jsonname)
-        self.wafername = js['WAFERNAME']
-        self.jsonpath = js['JSONPATH']
-        self.gdspath = js['GDSPATH']
-        reticles = js['RETICLES']
+        jdata = self.ReadJson(jsonname)
+        self.wafername = jdata['WAFERNAME']
+        self.jsonpath = jdata['JSONPATH']
+        self.gdspath = jdata['GDSPATH']
+        self.reticles = jdata['RETICLES']
+        self.bsize = jdata['BLANKSIZE']
 
         D_reticles = Device('reticles')
 
-        for i, ret in enumerate(reticles):
+        for i, ret in enumerate(self.reticles):
             rname = ret['NAME']
             rtype = ret['TYPE']
-            center = ret['CENTER']
+            rcenter = ret['CENTER']
             srcfile = ret['SRCFILE']
             nfg = ret['NFG']
 
-            rtname = f'{rtype}-FG{nfg}'
+            rtname = f'{rtype}'
             d_ret = D_reticles.add_ref(self.LoadSrc(srcfile, rtname))
-            d_ret.center = center
+            d_ret.center = rcenter
 
-            print (f'[DrawWafer] {i:02} {rname}-{rtype}-FG{nfg} is placed at {center}')
+            wrname = f"{self.wafername} - {rname} {rtype}"
+            d_names = D_reticles.add_ref(
+                        self.DrawReticleNames(
+                            srcfile, wrname, rcenter, self.bsize))
+
+            print (f'[DrawWafer] {i:02} {rname}-{rtype} is placed at {rcenter}')
 
         return D_reticles
 
+    def PlaceAlignkeys_from_json(self, jsonname, outline_size=None, outline_width=50):
+        jdata = self.ReadJson(jsonname)
+        akeys = jdata['ALIGNKEYS']
+
+        D_akey = Device('alignkeys')
+
+        for i, key in enumerate(akeys):
+            num = key['NUM']
+            center = key['CENTER']
+            srcfile = key['SRCFILE']
+
+            dname = f'alignkey-{num}'
+            d_key = D_akey.add_ref(self.LoadSrc(srcfile, dname))
+            d_key.center = center
+
+            print (f'[DrawWafer] {num:02} an align key is placed at {center}')
+
+        ls = LayerSet()
+        ls.add_layer(name = 'akey', gds_layer = 1, description='align key 0')
+        ls.add_layer(name = 'jte',  gds_layer = 2, description='jte and guardrings')
+        ls.add_layer(name = 'gain', gds_layer = 2, description='gain layer')
+
+        if outline_size:
+            for i, key in enumerate(akeys):
+                center = key['CENTER']
+
+                for j in range(1, 9):
+                    rect_in = pg.rectangle(size=outline_size, layer=99)
+                    rect_out = pg.offset(rect_in, distance=outline_width, layer=99)
+                    rect_out = pg.boolean(rect_out, rect_in, operation='not', layer=j)
+                    rect_out.center = center
+                    D_akey << rect_out
+
+        return D_akey
+
     def LoadSrc(self, srcfile, rtname=None):
-        print (f'Loading {srcfile}')
+        print (f'[DrawWafer] Loading {srcfile}')
         if srcfile in self.d_loaded.keys():
             return self.d_loaded[srcfile]
 
@@ -164,6 +206,53 @@ class DrawWafer:
         d_reticle.write_gds(gdsname)
         return d_reticle
 
+    def DrawReticleNames(self, jsonname, wrname, rcenter, bsize, fontsize=60, layer=LAYERS['METAL']):
+        nameplate = pg.rectangle(size=bsize, layer=layer)
+        nameplate.center = (0, 0)
+        d_name = pg.text(text=wrname, size=fontsize, layer=layer)
+        d_name.center = (0, 0)
+        nameplate = pg.boolean(nameplate, d_name, operation='not', layer=layer)
+        D_names = Device('reticle_names')
+
+        if   os.path.exists(jsonname):
+            jsonname1 = jsonname 
+        elif os.path.exists(jsonname+'.json'):
+            jsonname1 = jsonname + '.json'
+        elif os.path.exists(os.path.join(self.jsonpath, jsonname)):
+            jsonname1 = os.path.join(self.jsonpath, jsonname)
+        elif os.path.exists(os.path.join(self.jsonpath, jsonname+'.json')):
+            jsonname1 = os.path.join(self.jsonpath, jsonname+'.json')
+        else:
+            print (f"[ERROR] The json file is not found: {srcfile}")
+            raise
+    
+        jdata = self.ReadJson(jsonname1)
+        sensors = jdata['SENSORS']
+
+        for sensor in sensors:
+            ssize   = sensor['SIZE']
+            scenter = sensor['CENTER']
+            rotation = 90
+            rncenter = ssize
+            d_nameplate = D_names.add_ref(nameplate)
+            d_nameplate.rotate(rotation)
+            
+
+            d_nameplate.center = (rcenter[0] + scenter[0] -ssize[0]/2 + bsize[1]/2, 
+                                  rcenter[1] + scenter[1])   
+
+            if 'rotation' in sensor['PARAMETERS'].keys():
+                rotation1 = sensor['PARAMETERS']['rotation']
+                d_nameplate.rotate(rotation1, center=(rcenter[0]+scenter[0], rcenter[1]+scenter[1]))
+            elif 'rotation' in jdata['PARAMDEFAULT']:
+                rotation1 = jdata['PARAMDEFAULT']['rotation']
+                d_nameplate.rotate(rotation1, center=(rcenter[0]+scenter[0], rcenter[1]+scenter[1]))
+                
+            
+             
+        return D_names
+        
+
     def DrawLayerNames(self):
         d_texts = Device('texts')
         d_texts1 = Device('texts1')
@@ -179,7 +268,7 @@ class DrawWafer:
             return d_txt
 
         d_texts1 << _get_text('#1 AKEY',   LAYERS['AKEY'])
-        d_texts1 << _get_text('#2 JTE/GR', LAYERS['JTE'])
+        d_texts1 << _get_text('#2 JTE',    LAYERS['JTE'])
         d_texts1 << _get_text('#3 GAIN',   LAYERS['GAIN'])
         d_texts1 << _get_text('#4 NPLUS',  LAYERS['NPLUS'])
         d_texts2 << _get_text('#5 PSTOP',  LAYERS['PSTOP'])

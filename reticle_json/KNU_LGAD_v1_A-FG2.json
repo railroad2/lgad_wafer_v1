@@ -1,10 +1,11 @@
 {
-    "RETICLENAME": "Reticle_A_FG0",
-    "RETICLETYPE": "typeA_FG0",
+    "RETICLENAME": "A-FG2",
+    "RETICLETYPE": "A-FG2",
     "DESCRIPTION": "The default reticle setup for KNU LGAD v1",
     "RETICLESIZE": [19140, 19140],
     "BOUNDMARGIN": [250, 250],
     "BLANKNAME" : true,
+    "BLANKSIZE" : [1500, 150],
     "PADGAP": [100, 100],
     "LAYERNUM": {
         "AKEY": 1,
@@ -27,7 +28,7 @@
         "pstop_width": 10,
         "gr_gap": 25,
         "gr_width": [65, 105],
-        "Nfg": 0,
+        "Nfg": 2,
         "fg_gap": [40, 20],
         "fg_width": 30,
         "edge_gap": 80,

@@ -66,7 +66,8 @@ def make():
     dic["DESCRIPTION"] = "Template"
     dic["RETICLESIZE"] = [19140, 19140]
     dic["BOUNDMARGIN"] = [250, 250]
-    dic["BLANKNAME"]   = False
+    dic["BLANKNAME"]   = True
+    dic["BLANKSIZE"]   = [1500, 150]
     dic["PADGAP"]      = [100, 100]
     dic["LAYERNUM"] = {
             "AKEY" : 1,

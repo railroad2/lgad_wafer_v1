@@ -65,6 +65,19 @@ def make():
     dic["EBRWIDTH"]    = 5000
     dic["JSONPATH"]    = "./reticle_json"
     dic["GDSPATH"]     = "./reticle_gds"
+    dic["BLANKSIZE"]   = [1500, 150]
+    dic["ALIGNKEYS"]   = [
+        {
+            "NUM": 1,
+            "SRCFILE": "align_keys/akey1.gds",
+            "CENTER" : [-39280, 0]
+        },
+        {
+            "NUM": 2,
+            "SRCFILE": "align_keys/akey1.gds",
+            "CENTER" : [39280, 0] 
+        }
+    ]
     dic["NRETICLES"]   = 45
     dic["RETICLES"]    = []
 
@@ -111,23 +124,27 @@ def make():
                 NRE += 1
                 rname = f"RE-{NRE}"
 
+            nfg = 0
             if (i, j) in i_typeE:
-                rtype = "TypeE"
+                rtype = "E"
             elif (i, j) in i_typeD:
-                rtype = "TypeD"
+                rtype = "D"
             elif (i, j) in i_typeC:
-                rtype = "TypeC"
+                rtype = "C"
             elif (i, j) in i_typeA:
-                rtype = "TypeA"
+                rtype = "A"
+                if j == 2:
+                    nfg = 1
+                    rtype += "-FG1"
+                elif j == 4:
+                    nfg = 2
+                    rtype += "-FG2"
+                else:
+                    nfg = 0
+                    rtype += "-FG0"
             else:
-                rtype = "TypeB"
+                rtype = "B"
 
-            if j == 2:
-                nfg = 1
-            elif j == 4:
-                nfg = 2
-            else:
-                nfg = 0
 
             num += 1 
             sizex = sizey = 19140
@@ -139,7 +156,7 @@ def make():
             dic_reticle["SIZE"]    = [sizex, sizey]
             dic_reticle["CENTER"]  = centers[i][j]
             dic_reticle["NFG"]     = nfg
-            dic_reticle["SRCFILE"] = (dic["WAFERNAME"]).replace(' ', '_') + "_" + dic_reticle["TYPE"] + "_FG" + str(dic_reticle["NFG"])
+            dic_reticle["SRCFILE"] = (dic["WAFERNAME"]).replace(' ', '_') + "_" + dic_reticle["TYPE"] 
 
             dic["RETICLES"].append(dic_reticle.copy()) 
 

@@ -15,6 +15,7 @@ def draw_wafer(jsonname):
     d_wafer.name = wn
 
     d_wafer << wafer.PlaceReticles_from_json(jsonname)
+    d_wafer << wafer.PlaceAlignkeys_from_json(jsonname, outline_size=(3000, 3000))
     d_wafer << wafer.DrawLayerNames()
 
     ofname = f'./wafer_gds/wafer_{wn}.gds'

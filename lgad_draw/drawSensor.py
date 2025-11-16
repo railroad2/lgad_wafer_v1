@@ -12,10 +12,14 @@ class DrawSensor:
                 gr_gap=10, gr_width=(65, 105), 
                 Nfg=0, fg_gap=(50, 10), fg_width=30,
                 edge_gap=80, ild_offset=1,
-                gain=True, nplus=True, jte=True, padild=True, padmetal=True, padoxide=True,
+                pad_offset=1280,
+                gain=True, nplus=True, jte=True, padild=True, 
+                padmetal=True, padoxide=True,
                 pstop=True, guardring=True, edge=True, 
                 rounding=True, tol=0.1, print_progress=False, 
-                sensor_name=None, reticle_name=None, layers=None, rotation=0):
+                sensor_name=None, reticle_name=None, reticle_name_blank=False,
+                blank_size=None,
+                layers=None, rotation=0):
 
         if layers is None:
             LAYERS = layer_default.LAYERNUM
@@ -42,6 +46,8 @@ class DrawSensor:
         dim_per.Nfg = Nfg
         dim_per.fg_gap = fg_gap
         dim_per.edge_gap = edge_gap
+        dim_per.pad_off_x = pad_offset
+        dim_per.pad_off_y = pad_offset
 
         # finally calculate all the dimensions
         dim_per.set_dims(dim_pad)
@@ -77,6 +83,8 @@ class DrawSensor:
         if edge:
             d_edge  = draw_per.DrawEdge(sensor_name=sensor_name, 
                                         reticle_name=reticle_name,
+                                        reticle_name_blank=reticle_name_blank,
+                                        blank_size=blank_size,
                                         layer=LAYERS['METAL'],
                                         layer_oxide=LAYERS['OXIDE'])
             per0.add(d_edge) 

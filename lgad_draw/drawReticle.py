@@ -59,7 +59,7 @@ class DrawReticle:
         layerdefault    = jdata["LAYERDEFAULT"]
         prefix          = jdata["SENSORPREFIX"]
         blank_name      = jdata["BLANKNAME"]
-    
+        blank_size      = jdata["BLANKSIZE"] 
         sensors_info    = jdata["SENSORS"]
 
         rect_boundary = pg.rectangle(self.boundary_size, layer=LAYERS['AUX'])
@@ -96,6 +96,8 @@ class DrawReticle:
             # draw the sensor!
             sensor = lg.DrawSensor(**params, **layeropt, 
                                    sensor_name=sensor_name, reticle_name=reticle_name,
+                                   reticle_name_blank=blank_name,
+                                   blank_size=blank_size,
                                    layers=LAYERS)
             sensor.name = f'sensor_{i:03}_{sensor.name.split("_")[-1]}'
             sensor.center = center

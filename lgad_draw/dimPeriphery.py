@@ -30,6 +30,7 @@ class DimPeriphery:
     edge_width = 150
     edge_center = (0, 0)
     edge_gap = 60
+    blank_size = (1500, 150)
 
     def __init__(self, nx=1, ny=1, dim_pads=[], c_pads=[]):
         self.nx = nx

@@ -5,457 +5,470 @@
     "EBRWIDTH": 5000,
     "JSONPATH": "./reticle_json",
     "GDSPATH": "./reticle_gds",
+    "BLANKSIZE": [1500, 150],
+    "ALIGNKEYS": [
+        {
+            "NUM": 1,
+            "SRCFILE": "align_keys/akey1.gds",
+            "CENTER": [-39280, 0]
+        },
+        {
+            "NUM": 2,
+            "SRCFILE": "align_keys/akey1.gds",
+            "CENTER": [39280, 0]
+        }
+    ],
     "NRETICLES": 45,
     "RETICLES": [
         {
             "NUM": 1,
             "NAME": "RE-1",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(1, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, 58920],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 2,
             "NAME": "RE-2",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG1",
             "INDEX": "(1, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, 58920],
             "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG1"
+            "SRCFILE": "KNU_LGAD_v1_A-FG1"
         },
         {
             "NUM": 3,
             "NAME": "RE-3",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG0",
             "INDEX": "(1, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, 58920],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG0"
+            "SRCFILE": "KNU_LGAD_v1_A-FG0"
         },
         {
             "NUM": 4,
             "NAME": "RE-4",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG2",
             "INDEX": "(1, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, 58920],
             "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG2"
+            "SRCFILE": "KNU_LGAD_v1_A-FG2"
         },
         {
             "NUM": 5,
             "NAME": "RE-5",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(1, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, 58920],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 6,
             "NAME": "RE-6",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(2, 1)",
             "SIZE": [19140, 19140],
             "CENTER": [-58920, 39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 7,
             "NAME": "RI-1",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(2, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, 39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 8,
             "NAME": "RI-2",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG1",
             "INDEX": "(2, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, 39280],
             "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG1"
+            "SRCFILE": "KNU_LGAD_v1_A-FG1"
         },
         {
             "NUM": 9,
             "NAME": "RI-3",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG0",
             "INDEX": "(2, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, 39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG0"
+            "SRCFILE": "KNU_LGAD_v1_A-FG0"
         },
         {
             "NUM": 10,
             "NAME": "RI-4",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG2",
             "INDEX": "(2, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, 39280],
             "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG2"
+            "SRCFILE": "KNU_LGAD_v1_A-FG2"
         },
         {
             "NUM": 11,
             "NAME": "RI-5",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(2, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, 39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 12,
             "NAME": "RE-7",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(2, 7)",
             "SIZE": [19140, 19140],
             "CENTER": [58920, 39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 13,
             "NAME": "RE-8",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(3, 1)",
             "SIZE": [19140, 19140],
             "CENTER": [-58920, 19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 14,
             "NAME": "RI-6",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(3, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, 19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 15,
             "NAME": "RI-7",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG1",
             "INDEX": "(3, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, 19640],
             "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG1"
+            "SRCFILE": "KNU_LGAD_v1_A-FG1"
         },
         {
             "NUM": 16,
             "NAME": "RI-8",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG0",
             "INDEX": "(3, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, 19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG0"
+            "SRCFILE": "KNU_LGAD_v1_A-FG0"
         },
         {
             "NUM": 17,
             "NAME": "RI-9",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG2",
             "INDEX": "(3, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, 19640],
             "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG2"
+            "SRCFILE": "KNU_LGAD_v1_A-FG2"
         },
         {
             "NUM": 18,
             "NAME": "RI-10",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(3, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, 19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 19,
             "NAME": "RE-9",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(3, 7)",
             "SIZE": [19140, 19140],
             "CENTER": [58920, 19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 20,
             "NAME": "RE-10",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(4, 1)",
             "SIZE": [19140, 19140],
             "CENTER": [-58920, 0],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 21,
             "NAME": "RI-11",
-            "TYPE": "TypeD",
+            "TYPE": "D",
             "INDEX": "(4, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, 0],
             "NFG": 0,
-            "SRCFILE": "./align_keys/akey1.gds"
+            "SRCFILE": "KNU_LGAD_v1_D"
         },
         {
             "NUM": 22,
             "NAME": "RI-12",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG1",
             "INDEX": "(4, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, 0],
             "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG1"
+            "SRCFILE": "KNU_LGAD_v1_A-FG1"
         },
         {
             "NUM": 23,
             "NAME": "RI-13",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG0",
             "INDEX": "(4, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, 0],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG0"
+            "SRCFILE": "KNU_LGAD_v1_A-FG0"
         },
         {
             "NUM": 24,
             "NAME": "RI-14",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG2",
             "INDEX": "(4, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, 0],
             "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG2"
+            "SRCFILE": "KNU_LGAD_v1_A-FG2"
         },
         {
             "NUM": 25,
             "NAME": "RI-15",
-            "TYPE": "TypeD",
+            "TYPE": "D",
             "INDEX": "(4, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, 0],
             "NFG": 0,
-            "SRCFILE": "./align_keys/akey1.gds"
+            "SRCFILE": "KNU_LGAD_v1_D"
         },
         {
             "NUM": 26,
             "NAME": "RE-11",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(4, 7)",
             "SIZE": [19140, 19140],
             "CENTER": [58920, 0],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 27,
             "NAME": "RE-12",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(5, 1)",
             "SIZE": [19140, 19140],
             "CENTER": [-58920, -19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 28,
             "NAME": "RI-16",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(5, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, -19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 29,
             "NAME": "RI-17",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG1",
             "INDEX": "(5, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, -19640],
             "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG1"
+            "SRCFILE": "KNU_LGAD_v1_A-FG1"
         },
         {
             "NUM": 30,
             "NAME": "RI-18",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG0",
             "INDEX": "(5, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, -19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG0"
+            "SRCFILE": "KNU_LGAD_v1_A-FG0"
         },
         {
             "NUM": 31,
             "NAME": "RI-19",
-            "TYPE": "TypeA",
+            "TYPE": "A-FG2",
             "INDEX": "(5, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, -19640],
             "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeA_FG2"
+            "SRCFILE": "KNU_LGAD_v1_A-FG2"
         },
         {
             "NUM": 32,
             "NAME": "RI-20",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(5, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, -19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 33,
             "NAME": "RE-13",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(5, 7)",
             "SIZE": [19140, 19140],
             "CENTER": [58920, -19640],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 34,
             "NAME": "RE-14",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(6, 1)",
             "SIZE": [19140, 19140],
             "CENTER": [-58920, -39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 35,
             "NAME": "RI-21",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(6, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, -39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 36,
             "NAME": "RI-22",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(6, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, -39280],
-            "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG1"
+            "NFG": 0,
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 37,
             "NAME": "RI-23",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(6, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, -39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 38,
             "NAME": "RI-24",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(6, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, -39280],
-            "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG2"
+            "NFG": 0,
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 39,
             "NAME": "RI-25",
-            "TYPE": "TypeE",
+            "TYPE": "E",
             "INDEX": "(6, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, -39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeE_FG0"
+            "SRCFILE": "KNU_LGAD_v1_E"
         },
         {
             "NUM": 40,
             "NAME": "RE-15",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(6, 7)",
             "SIZE": [19140, 19140],
             "CENTER": [58920, -39280],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         },
         {
             "NUM": 41,
             "NAME": "RE-16",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(7, 2)",
             "SIZE": [19140, 19140],
             "CENTER": [-39280, -58920],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 42,
             "NAME": "RE-17",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(7, 3)",
             "SIZE": [19140, 19140],
             "CENTER": [-19640, -58920],
-            "NFG": 1,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG1"
+            "NFG": 0,
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 43,
             "NAME": "RE-18",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(7, 4)",
             "SIZE": [19140, 19140],
             "CENTER": [0, -58920],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG0"
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 44,
             "NAME": "RE-19",
-            "TYPE": "TypeB",
+            "TYPE": "B",
             "INDEX": "(7, 5)",
             "SIZE": [19140, 19140],
             "CENTER": [19640, -58920],
-            "NFG": 2,
-            "SRCFILE": "KNU_LGAD_v1_TypeB_FG2"
+            "NFG": 0,
+            "SRCFILE": "KNU_LGAD_v1_B"
         },
         {
             "NUM": 45,
             "NAME": "RE-20",
-            "TYPE": "TypeC",
+            "TYPE": "C",
             "INDEX": "(7, 6)",
             "SIZE": [19140, 19140],
             "CENTER": [39280, -58920],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_TypeC_FG0"
+            "SRCFILE": "KNU_LGAD_v1_C"
         }
     ]
 }
