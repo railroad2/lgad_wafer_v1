@@ -28,3 +28,5 @@
 
 `$ python3 draw_wafer.py <json file name>`
 
+ex)
+`$ python3 draw_wafer.py wafer_json/wafer_template.json`
