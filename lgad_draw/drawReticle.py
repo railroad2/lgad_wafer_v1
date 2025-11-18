@@ -1,4 +1,4 @@
-import json
+import json5 as json
 
 import phidl.geometry as pg
 from phidl import Device
