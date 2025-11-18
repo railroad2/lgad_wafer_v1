@@ -60,7 +60,8 @@
                 "ny": 1,
                 "center": [-8520, 8520]
             },
-            "LAYEROPTOUT": {}
+            "LAYEROPTOUT": {
+                }
         },
         {
             "NUM": 2,

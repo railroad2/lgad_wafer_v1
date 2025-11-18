@@ -1,4 +1,7 @@
+__pycache__
+__pycache__/*
 lgad_draw/__pycache__
 lgad_draw/__pycache__/*
+.DS_Store
 *.gds
 *.lyp
