@@ -64,6 +64,8 @@ class DrawReticle:
         blank_name      = jdata["BLANKNAME"]
         blank_size      = jdata["BLANKSIZE"] 
         sensors_info    = jdata["SENSORS"]
+        skipnum         = jdata.get("SENSORSKIPNUM", [])
+        rotation        = jdata.get("ROTATION", None)
 
         rect_boundary = pg.rectangle(self.boundary_size, layer=self.layerset['AUX'])
         rect_out = pg.rectangle((self.boundary_size[0]+self.boundary_margin[0]*2, 
@@ -80,6 +82,9 @@ class DrawReticle:
 
             if i != num - 1:
                 print (f"[WARNING] the index ({i}) and the sensor number ({num}-1) are inconsistent!")
+
+            if num in skipnum:
+                continue
 
             center = info["CENTER"]
             sensor_name = info["NAME"]
@@ -109,6 +114,9 @@ class DrawReticle:
             print (f"   [DrawReticle] Sensor #{num:02} of {idx} is added at {center}")
         
         self.d_reticle.center = (0, 0)
+        if rotation:
+            self.d_reticle.rotate(rotation)
+
         return self.d_reticle
 
     def Draw(self, fname=None):
@@ -129,10 +137,7 @@ class DrawReticle:
 
         sname = f'{lgadpin}' 
         sname += f' -{nx}x{ny}'
-        #sname += f' -{lgadpin}'
         sname += f' -F{Nfg}'
-        #sname += f' -J{jte_width}'
-        #sname += f' -P{pstop_width}'
 
         # Only include J value if JTE is active
         if layeropt.get("jte", True):

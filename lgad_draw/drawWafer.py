@@ -254,27 +254,23 @@ class DrawWafer:
     def DrawReticleNames(self, jsonname, wrname, rcenter, bsize, fontsize=60, layer=layerset['METAL']):
         nameplate = pg.rectangle(size=bsize, layer=layer)
         nameplate.center = (0, 0)
+
         d_name = pg.text(text=wrname, size=fontsize, layer=layer)
         d_name.center = (0, 0)
+
         nameplate = pg.boolean(nameplate, d_name, operation='not', layer=layer)
         D_names = Device('reticle_names')
 
-        if   os.path.exists(jsonname):
-            jsonname1 = jsonname 
-        elif os.path.exists(jsonname+'.json'):
-            jsonname1 = jsonname + '.json'
-        elif os.path.exists(os.path.join(self.jsonpath, jsonname)):
-            jsonname1 = os.path.join(self.jsonpath, jsonname)
-        elif os.path.exists(os.path.join(self.jsonpath, jsonname+'.json')):
-            jsonname1 = os.path.join(self.jsonpath, jsonname+'.json')
-        else:
-            print (f"[ERROR] The json file is not found: {srcfile}")
-            raise
+        jsonname1 = self.TryPaths_json(jsonname)
     
         jdata = self.ReadJson(jsonname1)
         sensors = jdata['SENSORS']
+        skipnum = jdata.get('SENSORSKIPNUM', [])
 
         for sensor in sensors:
+            num = sensor['NUM']
+            if num in skipnum:
+                continue
             ssize   = sensor['SIZE']
             scenter = sensor['CENTER']
             rotation = 90
