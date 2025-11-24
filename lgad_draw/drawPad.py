@@ -142,6 +142,36 @@ class DrawPad:
         self.d_padoxide = oxide
         return oxide
 
+    def DrawPadOxide_16x16(self, layer=layerset['OXIDE'], offset_win=10):
+        size = self.dim_pad.padoxide_size
+        width = self.dim_pad.padoxide_width
+        center = self.dim_pad.padoxide_center
+        optwin_N = self.dim_pad.optwin_N
+        optwin_size = self.dim_pad.optwin_size
+        optwin_pos  = self.dim_pad.optwin_pos
+
+        oxide   = Device('padoxide')#pg.rectangle(size=size, layer=layer)
+        bumppad = pg.ellipse(radii=(45, 45), layer=99)
+        probepad = pg.rectangle(size=(200, 100), layer=99)
+        r_bumppad = oxide.add_ref(bumppad)
+        r_probepad = oxide.add_ref(probepad)
+        r_bumppad.center = (150, 0)
+        r_probepad.center = (125, -225)
+        #oxide   = pg.boolean(oxide, bumppad, operation='not', layer=layer)
+        #oxide   = pg.boolean(oxide, probepad, operation='not', layer=layer)
+        #oxide.center = center
+
+        for i in range(optwin_N):
+            rect_win = pg.rectangle(size=optwin_size[i], layer=99)
+            rect_win = pg.offset(rect_win, distance=offset_win, layer=99)
+            rect_win.center = optwin_pos[i]
+            oxide = pg.boolean(oxide, rect_win, operation='not', layer=layer)
+
+        oxide.simplify(self.tol)
+
+        self.d_padoxide = oxide
+        return oxide
+
     def DrawPadILD(self, layer=layerset['ILD'], rounding=3):
         size = self.dim_pad.padmetal_size
         center = self.dim_pad.padmetal_center

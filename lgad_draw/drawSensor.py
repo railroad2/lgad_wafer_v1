@@ -12,7 +12,8 @@ class DrawSensor:
                 gr_gap=10, gr_width=(65, 105), 
                 Nfg=0, fg_gap=(50, 10), fg_width=30,
                 edge_gap=80, ild_offset=1,
-                pad_offset=1280,
+                pad_offset=1280, pad_edge=2100,
+                dim_pad=None, dim_per=None,
                 gain=True, nplus=True, jte=True, padild=True, 
                 padmetal=True, padoxide=True,
                 pstop=True, guardring=True, edge=True, 
@@ -27,27 +28,34 @@ class DrawSensor:
             self.layerset = layerset
 
         # set dimensions for pad
-        dim_pad = lg.DimPad()     
-        dim_pad.jte_width = jte_width
-        #dim_pad.pstop_gap = pstop_gap
-        dim_pad.pstop_width = pstop_width
-        dim_pad.ild_offset = ild_offset
+        if dim_pad is None:
+            dim_pad = lg.DimPad()     
+
+            dim_pad.jte_width = jte_width
+            #dim_pad.pstop_gap = pstop_gap
+            dim_pad.pstop_width = pstop_width
+            dim_pad.ild_offset = ild_offset
 
         # set dimensions for periphery
-        dim_per = lg.DimPeriphery(nx, ny, dim_pad)
-        dim_per.gr_gap = gr_gap
-        dim_per.ild_offset = ild_offset
+        if dim_per is None:
+            dim_per = lg.DimPeriphery(nx, ny, dim_pad)
 
-        if isinstance(gr_width, (list, tuple)):
-            dim_per.gr_width, dim_per.gr_widthb = gr_width
-        elif isinstance(gr_width, (int, float)):
-            dim_per.gr_width = dim_per.gr_widthb = gr_width
+            dim_per.gr_gap = gr_gap
+            dim_per.ild_offset = ild_offset
 
-        dim_per.Nfg = Nfg
-        dim_per.fg_gap = fg_gap
-        dim_per.edge_gap = edge_gap
-        dim_per.pad_off_x = pad_offset
-        dim_per.pad_off_y = pad_offset
+
+            if isinstance(gr_width, (list, tuple)):
+                dim_per.gr_width, dim_per.gr_widthb = gr_width
+            elif isinstance(gr_width, (int, float)):
+                dim_per.gr_width = dim_per.gr_widthb = gr_width
+
+            dim_per.Nfg = Nfg
+            dim_per.fg_gap = fg_gap
+            dim_per.edge_gap = edge_gap
+            dim_per.pad_off_x = pad_offset
+            dim_per.pad_off_y = pad_offset
+            dim_per.pad_edge_x = pad_edge
+            dim_per.pad_edge_y = pad_edge
 
         # finally calculate all the dimensions
         dim_per.set_dims(dim_pad)
@@ -99,7 +107,10 @@ class DrawSensor:
             if print_progress: print ('pad ild is drawn.')
 
         if padoxide:
-            d_padox = draw_pad.DrawPadOxide(layer=self.layerset['OXIDE'])
+            if (nx, ny) == (16, 16):
+                d_padox = draw_pad.DrawPadOxide_16x16(layer=self.layerset['OXIDE'])
+            else:
+                d_padox = draw_pad.DrawPadOxide(layer=self.layerset['OXIDE'])
             pad0.add(d_padox) 
             if print_progress: print ('pad oxide is drawn.')
 

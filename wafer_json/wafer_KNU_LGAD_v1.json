@@ -136,7 +136,7 @@
             "TYPE": "B",
             "INDEX": "(2, 7)",
             "SIZE": [19140, 19140],
-            "CENTER": [58920, 39280],
+            "CENTER": [61180, 39280],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -206,7 +206,7 @@
             "TYPE": "B",
             "INDEX": "(3, 7)",
             "SIZE": [19140, 19140],
-            "CENTER": [58920, 19640],
+            "CENTER": [61180, 19640],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -276,7 +276,7 @@
             "TYPE": "B",
             "INDEX": "(4, 7)",
             "SIZE": [19140, 19140],
-            "CENTER": [58920, 0],
+            "CENTER": [61180, 0],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -346,7 +346,7 @@
             "TYPE": "B",
             "INDEX": "(5, 7)",
             "SIZE": [19140, 19140],
-            "CENTER": [58920, -19640],
+            "CENTER": [61180, -19640],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -406,7 +406,7 @@
             "TYPE": "E",
             "INDEX": "(6, 6)",
             "SIZE": [19140, 19140],
-            "CENTER": [39280, -39280],
+            "CENTER": [40410, -40410],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_E"
         },
@@ -416,7 +416,7 @@
             "TYPE": "C",
             "INDEX": "(6, 7)",
             "SIZE": [19140, 19140],
-            "CENTER": [58920, -39280],
+            "CENTER": [61180, -39280],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_C"
         },
@@ -426,7 +426,7 @@
             "TYPE": "B",
             "INDEX": "(7, 2)",
             "SIZE": [19140, 19140],
-            "CENTER": [-39280, -58920],
+            "CENTER": [-39280, -61180],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -436,7 +436,7 @@
             "TYPE": "B",
             "INDEX": "(7, 3)",
             "SIZE": [19140, 19140],
-            "CENTER": [-19640, -58920],
+            "CENTER": [-19640, -61180],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -446,7 +446,7 @@
             "TYPE": "B",
             "INDEX": "(7, 4)",
             "SIZE": [19140, 19140],
-            "CENTER": [0, -58920],
+            "CENTER": [0, -61180],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -456,7 +456,7 @@
             "TYPE": "B",
             "INDEX": "(7, 5)",
             "SIZE": [19140, 19140],
-            "CENTER": [19640, -58920],
+            "CENTER": [19640, -61180],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_B"
         },
@@ -466,7 +466,7 @@
             "TYPE": "C",
             "INDEX": "(7, 6)",
             "SIZE": [19140, 19140],
-            "CENTER": [39280, -58920],
+            "CENTER": [39280, -61180],
             "NFG": 0,
             "SRCFILE": "KNU_LGAD_v1_C"
         }

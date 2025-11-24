@@ -320,6 +320,8 @@ class DrawAlignkey:
         d_win.center=(0, 0)
         return d_win
 
+
+
     def draw_all(self):
         D = Device('alignkey')
 
@@ -352,6 +354,7 @@ class DrawAlignkey:
         D.write_gds('align_keys/akey_posneg.gds')
 
         return D
+
 
 if __name__=="__main__":
     da = DrawAlignkey()
