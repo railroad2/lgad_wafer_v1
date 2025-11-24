@@ -159,14 +159,16 @@ class DrawPeriphery:
                                  join=self.join, tolerance=self.tol)
 
             fg = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
+            fg.simplify(self.tol)
 
             # ILD (±1 µm)
-            rect_out_i = pg.offset(rect_out, distance=-ild_offset,
-                                   join=self.join, tolerance=self.tol)
-            rect_in_i  = pg.offset(rect_in,  distance= ild_offset,
-                                   join=self.join, tolerance=self.tol)
-            ild = pg.boolean(rect_out_i, rect_in_i, operation='not',
-                             layer=self.layerset['ILD'])
+            #rect_out_i = pg.offset(rect_out, distance=-ild_offset,
+            #                       join=self.join, tolerance=self.tol)
+            #rect_in_i  = pg.offset(rect_in,  distance= ild_offset,
+            #                       join=self.join, tolerance=self.tol)
+            #ild = pg.boolean(rect_out_i, rect_in_i, operation='not',
+            #                 layer=self.layerset['ILD'])
+            ild = pg.offset(fg, distance=-ild_offset, tolerance=self.tol, layer=self.layerset['ILD'])
             ild.simplify(self.tol)
 
             # metal (same width)
@@ -209,7 +211,7 @@ class DrawPeriphery:
         rect_base = pg.offset(rect_out, distance=-bgap)
         rect_in = pg.offset(self.d_outmost, distance=gap,
                             join=self.join, tolerance=self.tol)
-        rect_in.center = grcenter
+        rect_in.center = self.d_outmost.center
 
         edge = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
         edge.center = center

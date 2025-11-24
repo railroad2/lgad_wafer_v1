@@ -88,32 +88,46 @@ class DrawReticle:
 
             center = info["CENTER"]
             sensor_name = info["NAME"]
+            gdsfile = info.get("GDSFILE", None)
+            srot    = info.get("ROTATION", None)
+            print (gdsfile)
 
-            params = paramdefault.copy()
-            layeropt = layerdefault.copy()
+            if gdsfile:
+                print (f"[INFO] loading {gdsfile}. ")
+                sensor = pg.import_gds(gdsfile)
+                sensor.name = f'{gdsfile}'
+            else:
+                params = paramdefault.copy()
+                layeropt = layerdefault.copy()
 
-            for key, val in info['PARAMETERS'].items():
-                params[key] = val
-             
-            for key, val in info['LAYEROPTOUT'].items():
-                layeropt[key] = val
+                for key, val in info['PARAMETERS'].items():
+                    params[key] = val
+                 
+                for key, val in info['LAYEROPTOUT'].items():
+                    layeropt[key] = val
 
-            if sensor_name == "":
-                sensor_name = self.ConstructSensorName(prefix, params, layeropt)
+                if sensor_name == "":
+                    sensor_name = self.ConstructSensorName(prefix, params, layeropt)
 
-            # draw the sensor!
-            sensor = lg.DrawSensor(**params, **layeropt, 
-                                   sensor_name=sensor_name, reticle_name=reticle_name,
-                                   reticle_name_blank=blank_name,
-                                   blank_size=blank_size,
-                                   layerset=self.layerset)
-            sensor.name = f'sensor_{i:03}_{sensor.name.split("_")[-1]}'
+                # draw the sensor!
+                sensor = lg.DrawSensor(**params, **layeropt, 
+                                       sensor_name=sensor_name, reticle_name=reticle_name,
+                                       reticle_name_blank=blank_name,
+                                       blank_size=blank_size,
+                                       layerset=self.layerset)
+
+                sensor.name = f'sensor_{i:03}_{sensor.name.split("_")[-1]}'
+
             sensor.center = center
+            if srot:
+                sensor.rotate(srot, center=center)
+
             self.d_reticle.add_ref(sensor)
 
             print (f"   [DrawReticle] Sensor #{num:02} of {idx} is added at {center}")
         
         self.d_reticle.center = (0, 0)
+
         if rotation:
             self.d_reticle.rotate(rotation)
 

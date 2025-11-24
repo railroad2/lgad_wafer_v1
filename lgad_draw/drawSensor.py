@@ -56,7 +56,7 @@ class DrawSensor:
         draw_per = lg.DrawPeriphery(dim_per)
 
         draw_pad.tol = tol
-        draw_per.tol = tol
+        draw_per.tol = tol*10
 
         if rounding:
             draw_pad.join = draw_per.join = 'round'
@@ -69,26 +69,6 @@ class DrawSensor:
         pad0   = Device('pad')
         per0   = Device('per')
 
-        # periphery
-        if guardring:
-            d_gr    = draw_per.DrawGR(layer=self.layerset['JTE'], 
-                                      layer_metal=self.layerset['METAL'], 
-                                      layer_oxide=self.layerset['OXIDE'])
-            per0.add(d_gr) 
-            if print_progress: print ('Guard-ring is drawn.')
-        if Nfg:
-            d_fgs   = draw_per.DrawFGs(Nfg, layer=self.layerset['JTE'])
-            per0.add(d_fgs) 
-            if print_progress: print ('Floating guard-ring is drawn.')
-        if edge:
-            d_edge  = draw_per.DrawEdge(sensor_name=sensor_name, 
-                                        reticle_name=reticle_name,
-                                        reticle_name_blank=reticle_name_blank,
-                                        blank_size=blank_size,
-                                        layer=self.layerset['METAL'],
-                                        layer_oxide=self.layerset['OXIDE'])
-            per0.add(d_edge) 
-            if print_progress: print ('Edge is drawn.')
 
         # pad
         if gain: 
@@ -130,6 +110,29 @@ class DrawSensor:
                 ref.move(dim_per.c_pads[k])
                 if print_progress: print (f'Pad {i}, {j} is drawn.')
                 k += 1
+
+        draw_per.d_outmost = sensor
+
+        # periphery
+        if guardring:
+            d_gr    = draw_per.DrawGR(layer=self.layerset['JTE'], 
+                                      layer_metal=self.layerset['METAL'], 
+                                      layer_oxide=self.layerset['OXIDE'])
+            per0.add(d_gr) 
+            if print_progress: print ('Guard-ring is drawn.')
+        if Nfg:
+            d_fgs   = draw_per.DrawFGs(Nfg, layer=self.layerset['JTE'])
+            per0.add(d_fgs) 
+            if print_progress: print ('Floating guard-ring is drawn.')
+        if edge:
+            d_edge  = draw_per.DrawEdge(sensor_name=sensor_name, 
+                                        reticle_name=reticle_name,
+                                        reticle_name_blank=reticle_name_blank,
+                                        blank_size=blank_size,
+                                        layer=self.layerset['METAL'],
+                                        layer_oxide=self.layerset['OXIDE'])
+            per0.add(d_edge) 
+            if print_progress: print ('Edge is drawn.')
 
         per0.center = sensor.center
         sensor.add_ref(per0)

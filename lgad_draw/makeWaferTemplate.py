@@ -69,12 +69,12 @@ def make():
     dic["ALIGNKEYS"]   = [
         {
             "NUM": 1,
-            "SRCFILE": "align_keys/akey1.gds",
+            "SRCFILE": "resources/akey1.gds",
             "CENTER" : [-39280, 0]
         },
         {
             "NUM": 2,
-            "SRCFILE": "align_keys/akey1.gds",
+            "SRCFILE": "resources/akey1.gds",
             "CENTER" : [39280, 0] 
         }
     ]
