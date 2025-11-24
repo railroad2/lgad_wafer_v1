@@ -29,7 +29,7 @@ class DrawSensor:
         # set dimensions for pad
         dim_pad = lg.DimPad()     
         dim_pad.jte_width = jte_width
-        dim_pad.pstop_gap = pstop_gap
+        #dim_pad.pstop_gap = pstop_gap
         dim_pad.pstop_width = pstop_width
         dim_pad.ild_offset = ild_offset
 

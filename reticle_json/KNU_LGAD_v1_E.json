@@ -32,7 +32,7 @@
         "fg_gap": [40, 20],
         "fg_width": 30,
         "edge_gap": 40,
-        "ild_offset": 10,
+        "ild_offset": 5,
         "rounding": true,
         "rotation": 0
     },
