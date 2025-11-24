@@ -100,15 +100,17 @@ class DrawWafer:
             rcenter = ret['CENTER']
             srcfile = ret['SRCFILE']
             nfg = ret['NFG']
+            fnameplate = ret.get('FLGNAMEPLATE', True)
 
             rtname = f'{rtype}'
             d_ret = D_reticles.add_ref(self.LoadSrc(srcfile, rtname))
             d_ret.center = rcenter
 
             wrname = f"{self.wafername} - {rname} {rtype}"
-            d_names = D_reticles.add_ref(
-                        self.DrawReticleNames(
-                            srcfile, wrname, rcenter, self.bsize))
+            if fnameplate:
+                d_names = D_reticles.add_ref(
+                            self.DrawReticleNames(
+                                srcfile, wrname, rcenter, self.bsize))
 
             print (f'[DrawWafer] {i:02} {rname}-{rtype} is placed at {rcenter}')
 

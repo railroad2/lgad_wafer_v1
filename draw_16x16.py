@@ -41,7 +41,7 @@ def main():
                            rounding=True, tol=tol, 
                            reticle_name="")
 
-    sensor.write_gds('reticle_gds/KNU_lgad_v1_E.gds') 
+    sensor.write_gds('reticle_gds/KNU_LGAD_v1_E.gds') 
     lg.qp(sensor)
     plt.show()
 

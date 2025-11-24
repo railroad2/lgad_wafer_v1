@@ -408,7 +408,8 @@
             "SIZE": [19140, 19140],
             "CENTER": [40410, -40410],
             "NFG": 0,
-            "SRCFILE": "KNU_LGAD_v1_E"
+            "SRCFILE": "KNU_LGAD_v1_E",
+            "FLGNAMEPLATE": false
         },
         {
             "NUM": 40,
