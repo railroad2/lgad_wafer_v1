@@ -1,4 +1,5 @@
 from phidl import Device
+from phidl import geometry as pg
 
 import lgad_draw as lg
 
@@ -122,7 +123,10 @@ class DrawSensor:
                 if print_progress: print (f'Pad {i}, {j} is drawn.')
                 k += 1
 
-        draw_per.d_outmost = sensor
+        rect_sensor = pg.rectangle(size=sensor.size, layer=99)
+        rect_sensor.center=sensor.center
+        draw_per.d_outmost = rect_sensor
+
 
         # periphery
         if guardring:

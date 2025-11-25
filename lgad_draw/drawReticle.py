@@ -90,7 +90,6 @@ class DrawReticle:
             sensor_name = info["NAME"]
             gdsfile = info.get("GDSFILE", None)
             srot    = info.get("ROTATION", None)
-            print (gdsfile)
 
             if gdsfile:
                 print (f"[INFO] loading {gdsfile}. ")

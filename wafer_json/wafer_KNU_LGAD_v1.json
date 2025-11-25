@@ -16,6 +16,16 @@
             "NUM": 2,
             "SRCFILE": "resources/akey_posneg.gds",
             "CENTER": [39280, 0]
+        },
+        {
+            "NUM": 3,
+            "SRCFILE": "resources/vernier.gds",
+            "CENTER": [-39280, 0]
+        },
+        {
+            "NUM": 3,
+            "SRCFILE": "resources/vernier.gds",
+            "CENTER": [39280, 0]
         }
     ],
     "NRETICLES": 45,

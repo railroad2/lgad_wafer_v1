@@ -13,6 +13,7 @@ class DrawPeriphery:
     def __init__(self, dim_per):
         if not isinstance(dim_per, DimPeriphery):
             raise
+
         self.dim_per = dim_per
         self.d_outmost = None
 
