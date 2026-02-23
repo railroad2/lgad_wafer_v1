@@ -27,8 +27,8 @@ class DimPad:
                    (100, 100), 
                    (100, 100)]
     optwin_pos  = [(0, 0), 
-                   (-450, 0), 
-                   (450, 0)]
+                   (-500, 0), 
+                   (500, 0)]
 
     #pad_size   = (jte_size[0]+jte_width, jte_size[1]+jte_width)
     #pad_size   = (jte_size[0]+jte_width+pstop_gap+pstop_width, jte_size[1]+jte_width+pstop_gap+pstop_width)

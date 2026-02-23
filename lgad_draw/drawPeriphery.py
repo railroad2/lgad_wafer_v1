@@ -1,3 +1,4 @@
+import numpy as np
 import phidl.geometry as pg
 from phidl import Device
 
@@ -76,6 +77,7 @@ class DrawPeriphery:
         center = self.dim_per.gr_center
         pad_offset = self.dim_per.pad_offset
         ild_offset = self.dim_per.ild_offset
+        nx, ny = self.dim_per.nx, self.dim_per.ny
 
         # inner boundary
         rect_base = pg.rectangle(size=bsize, layer=99)
@@ -114,12 +116,29 @@ class DrawPeriphery:
         metal.simplify(self.tol)
 
         # oxide opening
-        rect_out_o = pg.offset(rect_out, distance=-5,
-                               join=self.join, tolerance=self.tol)
-        rect_in_o  = pg.offset(rect_in,  distance= 5,
-                               join=self.join, tolerance=self.tol)
-        oxide = pg.boolean(rect_out_o, rect_in_o, operation='not', layer=layer_oxide)
-        oxide.simplify(self.tol)
+        if (nx, ny) == (16, 16):
+            oxide = Device('GRoxide')
+            ys = (rect_out.ymin + rect_in.ymin) / 2
+            bumppad = pg.ellipse(radii=(45, 45), layer=layer_oxide)
+            probepad = pg.rectangle(size=(200, 100), layer=layer_oxide)
+            c0b = np.array([rect_out.x -1300*8+1300/2+150, ys])
+            c0p = np.array([rect_out.x -1300*8+1300, ys])
+            for i in range(16):
+                r_bump = oxide.add_ref(bumppad)
+                r_bump.center = c0b + np.array([1300*i, 0])
+                if i<15:
+                    r_prob = oxide.add_ref(probepad)
+                    r_prob.center = c0p + np.array([1300*i, 0])
+             
+            oxide.simplify(self.tol)
+
+        else:
+            rect_out_o = pg.offset(rect_out, distance=-5,
+                                   join=self.join, tolerance=self.tol)
+            rect_in_o  = pg.offset(rect_in,  distance= 5,
+                                   join=self.join, tolerance=self.tol)
+            oxide = pg.boolean(rect_out_o, rect_in_o, operation='not', layer=layer_oxide)
+            oxide.simplify(self.tol)
 
         gr.add(ild)
         gr.add(metal)
@@ -201,15 +220,15 @@ class DrawPeriphery:
 
         size = self.dim_per.edge_size
         center = self.dim_per.edge_center
-        grcenter = self.dim_per.gr_center
+        #grcenter = self.dim_per.gr_center
         gap   = self.dim_per.edge_gap
         width = self.dim_per.edge_width
-        bgap  = self.dim_per.edge_bgap
+        #bgap  = self.dim_per.edge_bgap
 
         rect_out = pg.rectangle(size, layer=99)
         rect_out.center = center
 
-        rect_base = pg.offset(rect_out, distance=-bgap)
+        #rect_base = pg.offset(rect_out, distance=-bgap)
         rect_in = pg.offset(self.d_outmost, distance=gap,
                             join=self.join, tolerance=self.tol)
         rect_in.center = self.d_outmost.center

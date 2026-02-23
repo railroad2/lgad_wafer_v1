@@ -101,17 +101,30 @@ class DrawPad:
         metal = pg.rectangle(size=size, layer=layer)
         metal.center = center
 
-        if rounding:
-            metal = pg.offset(metal, distance=-rounding, layer=layer)
-            metal = pg.offset(metal, distance=+rounding, join=self.join, tolerance=self.tol, layer=layer)
 
         for i in range(optwin_N):
             rect_win = pg.rectangle(size=optwin_size[i], layer=99)
             rect_win.center = optwin_pos[i]
+            if abs(rect_win.xmin - metal.xmin) < 5:
+                rect_add = pg.rectangle(size=optwin_size[i], layer=99)
+                rect_add.center = optwin_pos[i]
+                rect_add.move((-50, 0))
+                rect_win.add_ref(rect_add)
+            elif abs(rect_win.xmax - metal.xmax) < 5:
+                rect_add = pg.rectangle(size=optwin_size[i], layer=99)
+                rect_add.center = optwin_pos[i]
+                rect_add.move((50, 0))
+                rect_win.add_ref(rect_add)
+
+
             if rounding_win:
                 rect_win = pg.offset(rect_win, distance=-rounding_win)
                 rect_win = pg.offset(rect_win, distance=+rounding_win, join=self.join, tolerance=self.tol)
             metal = pg.boolean(metal, rect_win, operation='not', layer=layer)
+
+        if rounding:
+            metal = pg.offset(metal, distance=-rounding, layer=layer)
+            metal = pg.offset(metal, distance=+rounding, join=self.join, tolerance=self.tol, layer=layer)
             
         metal.simplify(self.tol)
 
