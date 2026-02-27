@@ -253,14 +253,32 @@ class DrawWafer:
         d_reticle.write_gds(gdsname)
         return d_reticle
 
-    def DrawReticleNames(self, jsonname, wrname, rcenter, bsize, fontsize=60, layer=layerset['METAL']):
+    def DrawReticleNames(self, jsonname, wrname, rcenter, bsize, fontsize=60, 
+                         layer=layerset['METAL'],
+                         layer_ild=layerset['ILD']):
         nameplate = pg.rectangle(size=bsize, layer=layer)
         nameplate.center = (0, 0)
+
+        ild_offset = 5
+        self.join='round'
+        self.tol = 0.1
 
         d_name = pg.text(text=wrname, size=fontsize, layer=layer)
         d_name.center = (0, 0)
 
+        ild = pg.rectangle(size=(bsize[0], bsize[1]-ild_offset), layer=layer_ild)
+        ild.center=(0, -ild_offset/2)
+
         nameplate = pg.boolean(nameplate, d_name, operation='not', layer=layer)
+
+        wrname_off  = pg.offset(d_name, distance=ild_offset, join=self.join, tolerance=self.tol)
+        wrname_rect = pg.rectangle(wrname_off.size, layer=99)
+        wrname_rect = pg.offset(wrname_rect, distance=ild_offset, join=self.join, tolerance=self.tol)
+        wrname_rect.simplify(self.tol)
+        wrname_rect.center = d_name.center
+
+        ild = pg.boolean(ild, wrname_rect, operation='not', layer=layer_ild)
+
         D_names = Device('reticle_names')
 
         jsonname1 = self.TryPaths_json(jsonname)
@@ -276,22 +294,25 @@ class DrawWafer:
             ssize   = sensor['SIZE']
             scenter = sensor['CENTER']
             rotation = 90
-            rncenter = ssize
+            #rncenter = ssize
             d_nameplate = D_names.add_ref(nameplate)
             d_nameplate.rotate(rotation)
-            
+            d_ild = D_names.add_ref(ild)
+            d_ild.rotate(rotation)
 
             d_nameplate.center = (rcenter[0] + scenter[0] -ssize[0]/2 + bsize[1]/2, 
+                                  rcenter[1] + scenter[1])   
+            d_ild.center       = (rcenter[0] + scenter[0] -ssize[0]/2 + bsize[1]/2 + ild_offset/2, 
                                   rcenter[1] + scenter[1])   
 
             if 'rotation' in sensor['PARAMETERS'].keys():
                 rotation1 = sensor['PARAMETERS']['rotation']
                 d_nameplate.rotate(rotation1, center=(rcenter[0]+scenter[0], rcenter[1]+scenter[1]))
+                d_ild      .rotate(rotation1, center=(rcenter[0]+scenter[0], rcenter[1]+scenter[1]))
             elif 'rotation' in jdata['PARAMDEFAULT']:
                 rotation1 = jdata['PARAMDEFAULT']['rotation']
                 d_nameplate.rotate(rotation1, center=(rcenter[0]+scenter[0], rcenter[1]+scenter[1]))
-                
-            
+                d_ild      .rotate(rotation1, center=(rcenter[0]+scenter[0], rcenter[1]+scenter[1]))
              
         return D_names
         

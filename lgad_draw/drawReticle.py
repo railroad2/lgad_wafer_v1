@@ -74,6 +74,10 @@ class DrawReticle:
         rect_boundary.center = (0, 0)
         rect_boundary = pg.boolean(rect_out, rect_boundary, operation='not', layer=self.layerset['AUX'])
 
+        pstop_reticle = pg.rectangle(self.boundary_size, layer=self.layerset['PSTOP'])
+        pstop_reticle = pg.offset(pstop_reticle, distance=100, join='round', tolerance=0.1)
+        pstop_reticle.center = (0, 0)
+
         self.d_reticle.add_ref(rect_boundary)
 
         for i, info in enumerate(sensors_info):
@@ -123,8 +127,15 @@ class DrawReticle:
 
             self.d_reticle.add_ref(sensor)
 
+            pstop_sensor = pg.rectangle(sensor.size, layer=99)
+            pstop_sensor = pg.offset(pstop_sensor, distance=5, join='round', tolerance=0.1, layer=99)
+            pstop_sensor.simplify()
+            pstop_sensor.center = sensor.center
+            pstop_reticle = pg.boolean(pstop_reticle, pstop_sensor, operation='not', layer=self.layerset['PSTOP'])
+
             print (f"   [DrawReticle] Sensor #{num:02} of {idx} is added at {center}")
         
+        self.d_reticle.add_ref(pstop_reticle)
         self.d_reticle.center = (0, 0)
 
         if rotation:

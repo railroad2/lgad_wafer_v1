@@ -61,8 +61,8 @@ class DimPeriphery:
         c_pads = np.array(self.c_pads)
 
         # gr
-        self.base_size = (np.max(c_pads[:, 0]) - np.min(c_pads[:, 0]) + dim_pads[0].nplus_size[0],
-                          np.max(c_pads[:, 1]) - np.min(c_pads[:, 1]) + dim_pads[0].nplus_size[1])
+        self.base_size = (np.max(c_pads[:, 0]) - np.min(c_pads[:, 0]) + dim_pads[0].nplus_sizeb[0],
+                          np.max(c_pads[:, 1]) - np.min(c_pads[:, 1]) + dim_pads[0].nplus_sizeb[1])
 
         self.base_center = (np.average(c_pads[:, 0]), np.average(c_pads[:, 1]))
 

@@ -61,13 +61,15 @@ class DrawPeriphery:
 
 
     # ---------------------------------------------------------
-    # MAIN GUARD RING (JTE)
+    # MAIN GUARD RING (implant with JTE)
     # ---------------------------------------------------------
     def DrawGR(self,
                layer=layerset['JTE'],
                layer_metal=layerset['METAL'],
                layer_oxide=layerset['OXIDE'],
-               layer_ild=layerset['ILD']):
+               layer_ild=layerset['ILD'], 
+               layer_pstop=layerset['PSTOP'], 
+               layer_nplus=layerset['NPLUS']):
         
         bsize = self.dim_per.base_size
         bcenter = self.dim_per.base_center
@@ -90,7 +92,7 @@ class DrawPeriphery:
         rect_in.simplify(self.tol)
 
         # outer boundary
-        rect_base1 = pg.rectangle(size=(bsize[0], bsize[1] + (widthb-width)), layer=99)
+        rect_base1 = pg.rectangle(size=(bsize[0], bsize[1] + (widthb - width)), layer=99)
         rect_base1.center = center
         rect_out = pg.offset(rect_base1,
                              distance=pad_offset+width+gap,
@@ -100,15 +102,21 @@ class DrawPeriphery:
         # JTE ring
         gr = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
 
+        gr_nplus = pg.offset(gr, distance=-3, join=self.join, tolerance=self.tol, layer=layer_nplus) 
+        gr_nplus.simplify()
+
         # -----------------------------------------------------
         # ADD ILD (±1 µm shrink) + metal (same width) 
         # -----------------------------------------------------
         # ILD
+        """
         rect_out_i = pg.offset(rect_out, distance=-ild_offset,
                                join=self.join, tolerance=self.tol)
         rect_in_i  = pg.offset(rect_in,  distance= ild_offset,
                                join=self.join, tolerance=self.tol)
         ild = pg.boolean(rect_out_i, rect_in_i, operation='not', layer=layer_ild)
+        """
+        ild = pg.offset(gr, offset=-(width-5)/2, join=self.join, tolerance=self.tol)
         ild.simplify(self.tol)
 
         # metal (same width)
@@ -140,9 +148,16 @@ class DrawPeriphery:
             oxide = pg.boolean(rect_out_o, rect_in_o, operation='not', layer=layer_oxide)
             oxide.simplify(self.tol)
 
-        gr.add(ild)
+        # add pstop outside 
+        pstop_in = pg.offset(rect_out, distance=15, join=self.join, tolerance = self.tol)
+        pstop_out = pg.offset(pstop_in, distance=10, join=self.join, tolerance = self.tol)
+        pstop_gr = pg.boolean(pstop_out, pstop_in, operation='not', layer=layer_pstop)
+
+        gr.add(gr_nplus)
         gr.add(metal)
         gr.add(oxide)
+        gr.add(ild)
+        gr.add(pstop_gr)
 
         self.d_gr = gr
         self.d_outmost = rect_out
@@ -151,9 +166,13 @@ class DrawPeriphery:
 
     # ---------------------------------------------------------
     # FLOATING GUARD RINGS
-    # (ILD + metal ONLY, NO oxide)
+    # (ILD + metal ONLY, NO oxide open)
     # ---------------------------------------------------------
-    def DrawFGs(self, Nfg=2, layer=layerset['JTE']):
+    def DrawFGs(self, Nfg=2, 
+                layer=layerset['JTE'],
+                layer_pstop=layerset['PSTOP'], 
+                layer_nplus=layerset['NPLUS']):
+
         d_fgs = Device('fgs')
 
         if Nfg == 0:
@@ -181,14 +200,13 @@ class DrawPeriphery:
             fg = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
             fg.simplify(self.tol)
 
+            fg_nplus = pg.offset(fg, distance=-3, join=self.join, tolerance=self.tol, layer=layer_nplus) 
+            fg_nplus.simplify()
+
             # ILD (±1 µm)
-            #rect_out_i = pg.offset(rect_out, distance=-ild_offset,
-            #                       join=self.join, tolerance=self.tol)
-            #rect_in_i  = pg.offset(rect_in,  distance= ild_offset,
-            #                       join=self.join, tolerance=self.tol)
-            #ild = pg.boolean(rect_out_i, rect_in_i, operation='not',
-            #                 layer=self.layerset['ILD'])
-            ild = pg.offset(fg, distance=-ild_offset, tolerance=self.tol, layer=self.layerset['ILD'])
+            #ild = pg.offset(fg, distance=-ild_offset, tolerance=self.tol, layer=self.layerset['ILD'])
+            ild = pg.offset(fg, distance=-(self.dim_per.fg_width-5)/2, 
+                            tolerance=self.tol, layer=self.layerset['ILD'])
             ild.simplify(self.tol)
 
             # metal (same width)
@@ -196,12 +214,19 @@ class DrawPeriphery:
                                layer=self.layerset['METAL'])
             metal.simplify(self.tol)
 
+
             # **FG에는 oxide 없음**
+            fg.add(fg_nplus)
             fg.add(ild)
             fg.add(metal)
 
             d_fgs.add(fg)
 
+        pstop_in = pg.offset(rect_out, distance=15, join=self.join, tolerance = self.tol)
+        pstop_out = pg.offset(pstop_in, distance=10, join=self.join, tolerance = self.tol)
+        pstop_fg = pg.boolean(pstop_out, pstop_in, operation='not', layer=layer_pstop)
+
+        d_fgs.add(pstop_fg)
         d_fgs.center = center
         d_fgs.simplify(self.tol)
 
@@ -215,8 +240,10 @@ class DrawPeriphery:
     # ---------------------------------------------------------
     def DrawEdge(self, sensor_name=None, reticle_name=None,
                  reticle_name_blank=False, blank_size=None,
-                 fontsize=60, layer=layerset['METAL'],
-                 oxide_open=True, layer_oxide=layerset['OXIDE']):
+                 fontsize=60, oxide_open=True, 
+                 layer=layerset['METAL'],
+                 layer_oxide=layerset['OXIDE'],
+                 layer_ild=layerset['ILD']):
 
         size = self.dim_per.edge_size
         center = self.dim_per.edge_center
@@ -224,6 +251,7 @@ class DrawPeriphery:
         gap   = self.dim_per.edge_gap
         width = self.dim_per.edge_width
         #bgap  = self.dim_per.edge_bgap
+        ild_offset = self.dim_per.ild_offset
 
         rect_out = pg.rectangle(size, layer=99)
         rect_out.center = center
@@ -236,11 +264,30 @@ class DrawPeriphery:
         edge = pg.boolean(rect_out, rect_in, operation='not', layer=layer)
         edge.center = center
 
+        # -----------------------------------------------------
+        # ADD ILD (±1 µm shrink) + metal (same width) 
+        # -----------------------------------------------------
+        rect_out_i = pg.offset(rect_out, distance=-ild_offset*2,
+                               join=self.join, tolerance=self.tol)
+        rect_out_i = pg.offset(rect_out_i, distance=ild_offset,
+                               join=self.join, tolerance=self.tol)
+        rect_in_i  = pg.offset(rect_in,  distance= ild_offset,
+                               join=self.join, tolerance=self.tol)
+        ild = pg.boolean(rect_out_i, rect_in_i, operation='not', layer=layer_ild)
+        ild.simplify(self.tol)
+
         if sensor_name:
             sname = pg.text(text=sensor_name, size=fontsize,
                             justify='center', layer=layer)
             sname.center = (edge.x, edge.ymax - width/2)
             edge = pg.boolean(edge, sname, operation='not', layer=layer)
+
+            sname_off = pg.offset(sname, distance= ild_offset, join=self.join, tolerance=self.tol)
+            sname_rect = pg.rectangle(sname_off.size, layer=99)
+            sname_rect = pg.offset(sname_rect, distance=ild_offset, join=self.join, tolerance=self.tol)
+            sname_rect.simplify(self.tol)
+            sname_rect.center = sname_off.center
+            ild = pg.boolean(ild, sname_rect, operation='not', layer=layer_ild)
 
         if reticle_name:
             rname = pg.text(text=reticle_name, size=fontsize,
@@ -249,6 +296,13 @@ class DrawPeriphery:
             rname.center = (edge.xmin + width/2, edge.y)
             edge = pg.boolean(edge, rname, operation='not', layer=layer)
 
+            rname_off = pg.offset(rname, distance= ild_offset, join=self.join, tolerance=self.tol)
+            rname_rect = pg.rectangle(rname_off.size, layer=99)
+            rname_rect = pg.offset(rname_rect, distance=ild_offset, join=self.join, tolerance=self.tol)
+            rname_rect.simplify(self.tol)
+            rname_rect.center = rname_off.center
+            ild = pg.boolean(ild, rname_rect, operation='not', layer=layer_ild)
+
         if reticle_name_blank:
             if blank_size is None:
                 blank_size = self.dim_per.blank_size
@@ -256,6 +310,7 @@ class DrawPeriphery:
             rname_rect.rotate(90)
             rname_rect.center = (edge.xmin + blank_size[1]/2, edge.y)
             edge = pg.boolean(edge, rname_rect, operation='not', layer=layer)
+            ild = pg.boolean(ild, rname_rect, operation='not', layer=layer_ild)
 
         if oxide_open:
             ox = Device('edge_oxide_open')
@@ -272,7 +327,9 @@ class DrawPeriphery:
 
             edge.add(ox)
 
+        edge.add(ild)
         edge.simplify(self.tol)
+
         self.d_edge = edge
         return edge
 
