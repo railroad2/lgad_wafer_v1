@@ -109,14 +109,12 @@ class DrawPeriphery:
         # ADD ILD (±1 µm shrink) + metal (same width) 
         # -----------------------------------------------------
         # ILD
-        """
-        rect_out_i = pg.offset(rect_out, distance=-ild_offset,
+        rect_out_i = pg.offset(rect_in, distance=(width-5)/2+5,
                                join=self.join, tolerance=self.tol)
-        rect_in_i  = pg.offset(rect_in,  distance= ild_offset,
+        rect_in_i  = pg.offset(rect_out_i,  distance= -5,
                                join=self.join, tolerance=self.tol)
         ild = pg.boolean(rect_out_i, rect_in_i, operation='not', layer=layer_ild)
-        """
-        ild = pg.offset(gr, offset=-(width-5)/2, join=self.join, tolerance=self.tol)
+        #ild = pg.offset(gr, distance=-(width-5)/2, join=self.join, tolerance=self.tol, layer=layer_ild)
         ild.simplify(self.tol)
 
         # metal (same width)
@@ -327,7 +325,7 @@ class DrawPeriphery:
 
             edge.add(ox)
 
-        edge.add(ild)
+        #edge.add(ild)
         edge.simplify(self.tol)
 
         self.d_edge = edge

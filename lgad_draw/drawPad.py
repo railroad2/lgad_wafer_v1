@@ -191,7 +191,7 @@ class DrawPad:
         return oxide
 
     def DrawPadILD(self, layer=layerset['ILD'], rounding=3):
-        size = self.dim_pad.padmetal_size
+        size = self.dim_pad.jte_size 
         center = self.dim_pad.padmetal_center
         optwin_N = self.dim_pad.optwin_N
         optwin_size = self.dim_pad.optwin_size
@@ -199,8 +199,15 @@ class DrawPad:
         ild_offset = self.dim_pad.ild_offset
 
         #ild = pg.rectangle(size=(size[0]-ild_offset*2, size[1]-ild_offset*2), layer=layer)
-        ild = pg.offset(self.d_padmetal, distance=-ild_offset-rounding, layer=layer, join=self.join, tolerance=self.tol)
-        ild = pg.offset(ild, distance=rounding, layer=layer, join=self.join, tolerance=self.tol)
+        #ild = pg.offset(self.d_padmetal, distance=-ild_offset-rounding, layer=layer, join=self.join, tolerance=self.tol)
+        #ild = pg.offset(ild, distance=rounding, layer=layer, join=self.join, tolerance=self.tol)
+
+        ild_base = pg.rectangle(size, layer=99)
+        ild_in   = pg.offset(ild_base, distance=(self.dim_pad.jte_width/2 - 5/2) - 10, join='round', tolerance=self.tol, layer=99)
+        ild_in   = pg.offset(ild_in, distance=10, join='round', tolerance=self.tol, layer=99)
+        ild_out  = pg.offset(ild_in, distance=5, join='round', tolerance=self.tol, layer=99)
+        ild      = pg.boolean(ild_out, ild_in, operation='not', layer=layer)
+
         ild.center = center
 
         """

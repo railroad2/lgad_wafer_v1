@@ -49,7 +49,7 @@ class DimPad:
 
     @property
     def nplus_extend(self):
-        return self.jte_width - 3
+        return self.jte_width - 2
 
     @property
     def nplus_size(self):
