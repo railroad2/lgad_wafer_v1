@@ -37,19 +37,29 @@ class DimPad:
     pad_center = (0, 0)
 
     ild_offset = 1
+    closest_pstop = False
+    nplus_extension = True
 
     @property
     def pstop_gap(self):
-        return 0.5 * (
-            (self.pad_size[0] - self.jte_size[0]) / 2
-            - (self.jte_width + self.pstop_width))
+        if self.closest_pstop:
+            return 6
+        else:
+            return 0.5 * ( (self.pad_size[0] - self.jte_size[0]) / 2 - (self.jte_width + self.pstop_width) ) 
+
     @property
     def gr_gap(self):
-        return self.pstop_gap
+        if self.closest_pstop:
+            return 9
+        else:
+            return self.pstop_gap
 
     @property
     def nplus_extend(self):
-        return self.jte_width - 2
+        if self.nplus_extension:
+            return self.jte_width - 2
+        else:
+            return 0
 
     @property
     def nplus_size(self):

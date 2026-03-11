@@ -8,6 +8,7 @@ from phidl import Device, LayerSet
 
 import lgad_draw as lg
 from . import layer_default
+from .dimPeriphery import DimPeriphery
 
 
 class DrawWafer:
@@ -15,7 +16,6 @@ class DrawWafer:
     wafer_diameter   = 150   * 1000 # inch -> mm -> um
     wafer_cut_length =  57.5 * 1000 # mm -> um
     ebr_width        = 5000         # um
-
 
     wafer_radius     = wafer_diameter / 2
     wafer_cut_half   = wafer_cut_length / 2
@@ -27,7 +27,7 @@ class DrawWafer:
     d_loaded = {}
 
     def __init__(self):
-        pass
+        self.dim_per = DimPeriphery
 
     def DrawBoundary(self, layer=layerset['WAFER']):
         circ = pg.circle(radius = self.wafer_radius, layer=layer)
@@ -259,6 +259,7 @@ class DrawWafer:
         nameplate = pg.rectangle(size=bsize, layer=layer)
         nameplate.center = (0, 0)
 
+        edge_ild = self.dim_per.edge_ild
         ild_offset = 5
         self.join='round'
         self.tol = 0.1
@@ -280,6 +281,7 @@ class DrawWafer:
         ild = pg.boolean(ild, wrname_rect, operation='not', layer=layer_ild)
 
         D_names = Device('reticle_names')
+        dummy = Device('dummy for ild')
 
         jsonname1 = self.TryPaths_json(jsonname)
     
@@ -297,7 +299,10 @@ class DrawWafer:
             #rncenter = ssize
             d_nameplate = D_names.add_ref(nameplate)
             d_nameplate.rotate(rotation)
-            d_ild = D_names.add_ref(ild)
+            if (edge_ild):
+                d_ild = D_names.add_ref(ild)
+            else:
+                d_ild = dummy.add_ref(ild)
             d_ild.rotate(rotation)
 
             d_nameplate.center = (rcenter[0] + scenter[0] -ssize[0]/2 + bsize[1]/2, 

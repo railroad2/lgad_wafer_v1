@@ -10,7 +10,7 @@ class DimPeriphery:
     pad_edge_y = 2100 
 
     # guard-ring
-    gr_gap    = 50
+    gr_gap    = 30
     gr_width  = 65
     gr_widthb = 105
     gr_offset = gr_gap + gr_width/2
@@ -31,6 +31,7 @@ class DimPeriphery:
     edge_center = (0, 0)
     edge_gap = 60
     blank_size = (1500, 150)
+    edge_ild = False
 
     def __init__(self, nx=1, ny=1, dim_pads=[], c_pads=[]):
         self.nx = nx

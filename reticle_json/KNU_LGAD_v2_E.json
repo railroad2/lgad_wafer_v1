@@ -33,6 +33,7 @@
         "fg_width": 30,
         "edge_gap": 40,
         "ild_offset": 5,
+        "ild_width": 5,
         "rounding": true,
         "rotation": 0
     },

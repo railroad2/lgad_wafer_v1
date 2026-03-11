@@ -15,12 +15,16 @@ class DrawSensor:
                 edge_gap=80, ild_offset=1,
                 pad_offset=1280, pad_edge=2100,
                 dim_pad=None, dim_per=None,
+                closest_pstop=False,
+                nplus_extension=True,
                 gain=True, nplus=True, jte=True, padild=True, 
                 padmetal=True, padoxide=True,
                 pstop=True, guardring=True, edge=True, 
+                pstop_gr_out=True, pstop_fgr_in=False, pstop_fgr_out=True,
+                pstop_edge_out=True,
                 rounding=True, tol=0.01, print_progress=False, 
                 sensor_name=None, reticle_name=None, reticle_name_blank=False,
-                blank_size=None,
+                blank_size=None, ild_width=5, nild=1,
                 layerset=None, rotation=0):
 
         if layerset is None:
@@ -36,6 +40,8 @@ class DrawSensor:
             #dim_pad.pstop_gap = pstop_gap
             dim_pad.pstop_width = pstop_width
             dim_pad.ild_offset = ild_offset
+            dim_pad.closest_pstop = closest_pstop
+            dim_pad.nplus_extension = nplus_extension
 
         # set dimensions for periphery
         if dim_per is None:
@@ -103,7 +109,7 @@ class DrawSensor:
             if print_progress: print ('pad metal is drawn.')
 
         if padild:
-            d_padild = draw_pad.DrawPadILD(layer=self.layerset['ILD'])
+            d_padild = draw_pad.DrawPadILD(layer=self.layerset['ILD'], ild_width=ild_width, nild=nild)
             pad0.add(d_padild) 
             if print_progress: print ('pad ild is drawn.')
 
@@ -132,11 +138,15 @@ class DrawSensor:
         if guardring:
             d_gr    = draw_per.DrawGR(layer=self.layerset['JTE'], 
                                       layer_metal=self.layerset['METAL'], 
-                                      layer_oxide=self.layerset['OXIDE'])
+                                      layer_oxide=self.layerset['OXIDE'], 
+                                      ild_width=ild_width, 
+                                      pstop_gr_out=pstop_gr_out)
             per0.add(d_gr) 
             if print_progress: print ('Guard-ring is drawn.')
         if Nfg:
-            d_fgs   = draw_per.DrawFGs(Nfg, layer=self.layerset['JTE'])
+            d_fgs   = draw_per.DrawFGs(Nfg, layer=self.layerset['JTE'], 
+                                       ild_width=ild_width, 
+                                       pstop_fgr_in=pstop_fgr_in, pstop_fgr_out=pstop_fgr_out)
             per0.add(d_fgs) 
             if print_progress: print ('Floating guard-ring is drawn.')
         if edge:

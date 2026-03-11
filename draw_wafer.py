@@ -4,6 +4,7 @@ import json
 import lgad_draw as lg
 import pylab as plt
 import phidl.utilities as pu
+import phidl.geometry as pg
 
 def draw_wafer(jsonname):
     with open(jsonname, 'r') as f:
@@ -11,12 +12,15 @@ def draw_wafer(jsonname):
 
     wn = js['WAFERNAME'].replace(' ', '_')
 
+    layerset = lg.layer_default.layerset
     wafer = lg.DrawWafer()
     d_wafer = wafer.DrawBoundary()
     d_wafer.name = wn
 
     d_wafer << wafer.PlaceReticles_from_json(jsonname)
+
     d_wafer << wafer.PlaceAlignkeys_from_json(jsonname)
+
     d_wafer << wafer.DrawLayerNames()
 
     ofname = f'./wafer_gds/wafer_{wn}'

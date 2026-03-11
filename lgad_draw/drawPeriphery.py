@@ -69,7 +69,9 @@ class DrawPeriphery:
                layer_oxide=layerset['OXIDE'],
                layer_ild=layerset['ILD'], 
                layer_pstop=layerset['PSTOP'], 
-               layer_nplus=layerset['NPLUS']):
+               layer_nplus=layerset['NPLUS'], 
+               ild_width=5, 
+               pstop_gr_out=True):
         
         bsize = self.dim_per.base_size
         bcenter = self.dim_per.base_center
@@ -109,12 +111,15 @@ class DrawPeriphery:
         # ADD ILD (±1 µm shrink) + metal (same width) 
         # -----------------------------------------------------
         # ILD
-        rect_out_i = pg.offset(rect_in, distance=(width-5)/2+5,
-                               join=self.join, tolerance=self.tol)
-        rect_in_i  = pg.offset(rect_out_i,  distance= -5,
-                               join=self.join, tolerance=self.tol)
-        ild = pg.boolean(rect_out_i, rect_in_i, operation='not', layer=layer_ild)
-        #ild = pg.offset(gr, distance=-(width-5)/2, join=self.join, tolerance=self.tol, layer=layer_ild)
+        if (ild_width > 0):
+            rect_out_i = pg.offset(rect_in, distance=(width-ild_width)/2+ild_width,
+                                join=self.join, tolerance=self.tol)
+            rect_in_i  = pg.offset(rect_out_i,  distance= -ild_width,
+                                join=self.join, tolerance=self.tol)
+            ild = pg.boolean(rect_out_i, rect_in_i, operation='not', layer=layer_ild)
+        else:
+            ild = pg.offset(gr, distance=-ild_offset, join=self.join, tolerance=self.tol, layer=layer_ild)
+
         ild.simplify(self.tol)
 
         # metal (same width)
@@ -155,7 +160,8 @@ class DrawPeriphery:
         gr.add(metal)
         gr.add(oxide)
         gr.add(ild)
-        gr.add(pstop_gr)
+        if (pstop_gr_out):
+            gr.add(pstop_gr)
 
         self.d_gr = gr
         self.d_outmost = rect_out
@@ -169,7 +175,10 @@ class DrawPeriphery:
     def DrawFGs(self, Nfg=2, 
                 layer=layerset['JTE'],
                 layer_pstop=layerset['PSTOP'], 
-                layer_nplus=layerset['NPLUS']):
+                layer_nplus=layerset['NPLUS'], 
+                ild_width=5, 
+                pstop_fgr_out=True, 
+                pstop_fgr_in=True):
 
         d_fgs = Device('fgs')
 
@@ -202,9 +211,11 @@ class DrawPeriphery:
             fg_nplus.simplify()
 
             # ILD (±1 µm)
-            #ild = pg.offset(fg, distance=-ild_offset, tolerance=self.tol, layer=self.layerset['ILD'])
-            ild = pg.offset(fg, distance=-(self.dim_per.fg_width-5)/2, 
-                            tolerance=self.tol, layer=self.layerset['ILD'])
+            if (ild_width == 0):
+                ild = pg.offset(fg, distance=-ild_offset, tolerance=self.tol, layer=self.layerset['ILD'])
+            else:
+                ild = pg.offset(fg, distance=-(self.dim_per.fg_width-5)/2, 
+                                tolerance=self.tol, layer=self.layerset['ILD'])
             ild.simplify(self.tol)
 
             # metal (same width)
@@ -218,13 +229,23 @@ class DrawPeriphery:
             fg.add(ild)
             fg.add(metal)
 
+            if (Nfg > 1 and pstop_fgr_in and i<Nfg-1):
+                print ('making pstop between fgs')
+                pstop_in_in = pg.offset(rect_out, distance=5, join='round', tolerance=self.tol, layer=99)
+                pstop_in_out = pg.offset(pstop_in_in, distance=10, join='round', tolerance=self.tol, layer=99)
+                pstop_in = pg.boolean(pstop_in_out, pstop_in_in, operation='not', layer=layer_pstop)
+                d_fgs.add(pstop_in)
+
             d_fgs.add(fg)
+
 
         pstop_in = pg.offset(rect_out, distance=15, join=self.join, tolerance = self.tol)
         pstop_out = pg.offset(pstop_in, distance=10, join=self.join, tolerance = self.tol)
         pstop_fg = pg.boolean(pstop_out, pstop_in, operation='not', layer=layer_pstop)
 
-        d_fgs.add(pstop_fg)
+        if (pstop_fgr_out):
+            d_fgs.add(pstop_fg)
+
         d_fgs.center = center
         d_fgs.simplify(self.tol)
 
@@ -250,6 +271,7 @@ class DrawPeriphery:
         width = self.dim_per.edge_width
         #bgap  = self.dim_per.edge_bgap
         ild_offset = self.dim_per.ild_offset
+        edge_ild = self.dim_per.edge_ild
 
         rect_out = pg.rectangle(size, layer=99)
         rect_out.center = center
@@ -325,7 +347,8 @@ class DrawPeriphery:
 
             edge.add(ox)
 
-        #edge.add(ild)
+        if (edge_ild):
+            edge.add(ild)
         edge.simplify(self.tol)
 
         self.d_edge = edge

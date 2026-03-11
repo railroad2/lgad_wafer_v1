@@ -1,8 +1,7 @@
-
 {
-    "RETICLENAME": "A-FG2",
-    "RETICLETYPE": "A-FG2",
-    "DESCRIPTION": "The default reticle setup for KNU LGAD v1",
+    "RETICLENAME": "I-1",
+    "RETICLETYPE": "I-1",
+    "DESCRIPTION": "I with closest_pstop=true",
     "RETICLESIZE": [19140, 19140],
     "BOUNDMARGIN": [250, 250],
     "BLANKNAME" : true,
@@ -29,11 +28,17 @@
         "pstop_width": 10,
         "gr_gap": 25,
         "gr_width": [65, 105],
-        "Nfg": 2,
+        "Nfg": 0,
         "fg_gap": [40, 20],
         "fg_width": 30,
         "edge_gap": 80,
         "ild_offset": 5, 
+        "ild_width": 5,
+        "pstop_gr_out": true,
+        "pstop_fgr_in": false,
+        "pstop_fgr_out": true,
+        "nplus_extension": false,
+        "closest_pstop": true,
         "rounding": true,
         "rotation": 0
     },
@@ -47,7 +52,7 @@
         "guardring": true,
         "edge": true
     },
-    "SENSORPREFIX": "KNU LGAD v1",
+    "SENSORPREFIX": "KNU LGAD v2",
     "NSENSORS": 49,
     "SENSORS": [
         {

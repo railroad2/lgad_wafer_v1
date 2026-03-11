@@ -66,6 +66,7 @@ class DrawReticle:
         sensors_info    = jdata["SENSORS"]
         skipnum         = jdata.get("SENSORSKIPNUM", [])
         rotation        = jdata.get("ROTATION", None)
+        alignkeys       = jdata.get('ALIGNKEYS', False)
 
         rect_boundary = pg.rectangle(self.boundary_size, layer=self.layerset['AUX'])
         rect_out = pg.rectangle((self.boundary_size[0]+self.boundary_margin[0]*2, 
@@ -76,6 +77,9 @@ class DrawReticle:
 
         pstop_reticle = pg.rectangle(self.boundary_size, layer=self.layerset['PSTOP'])
         pstop_reticle = pg.offset(pstop_reticle, distance=100, join='round', tolerance=0.1)
+        pstop_reticle_in = pg.rectangle(self.boundary_size, layer=99 )
+        pstop_reticle_in = pg.offset(pstop_reticle_in, distance=10, join='round', tolerance=0.1)
+        pstop_reticle = pg.boolean(pstop_reticle, pstop_reticle_in, operation='not', layer=self.layerset['PSTOP'])
         pstop_reticle.center = (0, 0)
 
         self.d_reticle.add_ref(rect_boundary)
@@ -111,10 +115,13 @@ class DrawReticle:
 
                 if sensor_name == "":
                     sensor_name = self.ConstructSensorName(prefix, params, layeropt)
+                else:
+                    sensor_name = prefix + ' ' + sensor_name
 
                 # draw the sensor!
                 sensor = lg.DrawSensor(**params, **layeropt, 
-                                       sensor_name=sensor_name, reticle_name=reticle_name,
+                                       sensor_name=sensor_name, 
+                                       reticle_name=reticle_name,
                                        reticle_name_blank=blank_name,
                                        blank_size=blank_size,
                                        layerset=self.layerset)
@@ -128,14 +135,28 @@ class DrawReticle:
             self.d_reticle.add_ref(sensor)
 
             pstop_sensor = pg.rectangle(sensor.size, layer=99)
-            pstop_sensor = pg.offset(pstop_sensor, distance=5, join='round', tolerance=0.1, layer=99)
-            pstop_sensor.simplify()
+            pstop_sensor = pg.offset(pstop_sensor, distance=70, layer=99)
+            pstop_sensor_in = pg.rectangle(sensor.size, layer=99)
+            pstop_sensor_in = pg.offset(pstop_sensor_in, distance=10, 
+                                        join='round', tolerance=0.1, layer=99)
+            pstop_sensor_in.simplify()
+            pstop_sensor = pg.boolean(pstop_sensor, pstop_sensor_in,    
+                                      operation='not', 
+                                      layer=self.layerset['PSTOP'] )
             pstop_sensor.center = sensor.center
-            pstop_reticle = pg.boolean(pstop_reticle, pstop_sensor, operation='not', layer=self.layerset['PSTOP'])
+            #pstop_reticle = pg.boolean(pstop_reticle, pstop_sensor, 
+            #                           operation='not', 
+            #                           layer=self.layerset['PSTOP'])
+            pstop_reticle << pstop_sensor
 
             print (f"   [DrawReticle] Sensor #{num:02} of {idx} is added at {center}")
         
-        self.d_reticle.add_ref(pstop_reticle)
+        pstop_reticle.flatten()
+        pstop_reticle = pg.boolean(pstop_reticle, None, operation='or', layer=self.layerset['PSTOP'])
+
+        if layerdefault.get('pstop_edge_out', True):
+            self.d_reticle.add_ref(pstop_reticle)
+
         self.d_reticle.center = (0, 0)
 
         if rotation:

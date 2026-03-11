@@ -190,23 +190,44 @@ class DrawPad:
         self.d_padoxide = oxide
         return oxide
 
-    def DrawPadILD(self, layer=layerset['ILD'], rounding=3):
-        size = self.dim_pad.jte_size 
+    def DrawPadILD(self, layer=layerset['ILD'], ild_width=5, nild=1, rounding=5):
+        if self.dim_pad.nplus_extension:
+            size = self.dim_pad.jte_size 
+        else:
+            size = (self.dim_pad.nplus_size[0] - 30, self.dim_pad.nplus_size[1]-30)
+            print (size)
+
         center = self.dim_pad.padmetal_center
         optwin_N = self.dim_pad.optwin_N
         optwin_size = self.dim_pad.optwin_size
         optwin_pos  = self.dim_pad.optwin_pos
         ild_offset = self.dim_pad.ild_offset
+        ild_pitch = max(ild_width, 10) + ild_width
 
-        #ild = pg.rectangle(size=(size[0]-ild_offset*2, size[1]-ild_offset*2), layer=layer)
-        #ild = pg.offset(self.d_padmetal, distance=-ild_offset-rounding, layer=layer, join=self.join, tolerance=self.tol)
-        #ild = pg.offset(ild, distance=rounding, layer=layer, join=self.join, tolerance=self.tol)
+        if ild_width == 0 or nild == 0:
+            ild = pg.rectangle(size=(size[0]-ild_offset*2, size[1]-ild_offset*2), layer=layer)
+            ild = pg.offset(self.d_padmetal, distance=-ild_offset-rounding, layer=layer, join=self.join, tolerance=self.tol)
+            ild = pg.offset(ild, distance=rounding, layer=layer, join=self.join, tolerance=self.tol)
+        else:
+            ild_base = pg.rectangle(size, layer=99)
+            ild_base = pg.offset(ild_base, distance=-rounding, join='round', tolerance=self.tol, layer=99)
+            ild_base = pg.offset(ild_base, distance=+rounding, join='round', tolerance=self.tol, layer=99)
+            ild_base.simplify()
 
-        ild_base = pg.rectangle(size, layer=99)
-        ild_in   = pg.offset(ild_base, distance=(self.dim_pad.jte_width/2 - 5/2) - 10, join='round', tolerance=self.tol, layer=99)
-        ild_in   = pg.offset(ild_in, distance=10, join='round', tolerance=self.tol, layer=99)
-        ild_out  = pg.offset(ild_in, distance=5, join='round', tolerance=self.tol, layer=99)
-        ild      = pg.boolean(ild_out, ild_in, operation='not', layer=layer)
+            ild_in   = pg.offset(ild_base, distance=(self.dim_pad.jte_width/2) - ild_width/2, join='round', tolerance=self.tol, layer=99)
+            ild_out  = pg.offset(ild_in, distance=ild_width, join='round', tolerance=self.tol, layer=99)
+            ild      = pg.boolean(ild_out, ild_in, operation='not', layer=layer)
+
+            if nild > 1:
+                for i in range(nild-1):
+                    ild_in   = pg.offset(ild_base, distance=(self.dim_pad.jte_width/2) - ild_width/2 - ild_pitch*(i+1), 
+                                         join='round', tolerance=self.tol, layer=99)
+                    ild_in   = pg.offset(ild_in, distance=-rounding, join='round', tolerance=self.tol, layer=99)                     
+                    ild_in   = pg.offset(ild_in, distance=+rounding, join='round', tolerance=self.tol, layer=99)                     
+                    ild_out  = pg.offset(ild_in, distance=ild_width, join='round', tolerance=self.tol, layer=99)
+                    ild_1 = pg.boolean(ild_out, ild_in, operation='not', layer=layer)
+                    ild_1.simplify()
+                    ild << ild_1
 
         ild.center = center
 

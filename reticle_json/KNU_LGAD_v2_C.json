@@ -1,10 +1,10 @@
 {
-    "RETICLENAME": "B",
-    "RETICLETYPE": "B",
-    "DESCRIPTION": "Opt-in test for KNU LGAD v1",
+    "RETICLENAME": "C",
+    "RETICLETYPE": "C",
+    "DESCRIPTION": "Partially diced reticle for KNU LGAD v1",
     "RETICLESIZE": [19140, 19140],
     "BOUNDMARGIN": [250, 250],
-    "BLANKNAME"  : true,
+    "BLANKNAME" : true,
     "BLANKSIZE" : [1500, 150],
     "PADGAP": [100, 100],
     "LAYERNUM": {
@@ -33,6 +33,7 @@
         "fg_width": 30,
         "edge_gap": 80,
         "ild_offset": 5,
+        "ild_width": 5,
         "rounding": true,
         "rotation": 0
     },
@@ -58,13 +59,13 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-8520, 8520]
+                "center": [-8520, 8520],
+                "jte_width": 10,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "GDSFILE": "resources/testpattern1_2.gds",
+            "ROTATION": 90,
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 2,
@@ -75,13 +76,13 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-6320, 8520]
+                "center": [-6320, 8520],
+                "jte_width": 10,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "GDSFILE": "resources/testpattern2_2.gds",
+            "ROTATION": 90,
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 3,
@@ -92,13 +93,11 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-4120, 8520]
+                "center": [-4120, 8520],
+                "jte_width": 10,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 4,
@@ -109,10 +108,13 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-1920, 8520]
+                "center": [-1920, 8520],
+                "jte_width": 10,
+                "pstop_width": 25
             },
             "LAYEROPTOUT": {}
         },
+
         {
             "NUM": 5,
             "NAME": "",
@@ -122,13 +124,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [920, 8520]
+                "center": [920, 8520],
+                "jte_width": 10,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 6,
@@ -139,13 +139,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [4400, 8520]
+                "center": [4400, 8520],
+                "jte_width": 10,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 7,
@@ -156,7 +154,9 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [7880, 8520]
+                "center": [7880, 8520],
+                "jte_width": 10,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         },
@@ -169,14 +169,13 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-8520, 6320]
+                "center": [-8520, 6320],
+                "jte_width": 20,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "GDSFILE": "resources/testpattern1_1.gds",
+            "ROTATION": 90,
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 9,
@@ -187,14 +186,13 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-6320, 6320]
+                "center": [-6320, 6320],
+                "jte_width": 20,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "GDSFILE": "resources/testpattern2_1.gds",
+            "ROTATION": 90,
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 10,
@@ -205,14 +203,11 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-4120, 6320]
+                "center": [-4120, 6320],
+                "jte_width": 20,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 11,
@@ -223,7 +218,9 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-1920, 6320]
+                "center": [-1920, 6320],
+                "jte_width": 20,
+                "pstop_width": 25
             },
             "LAYEROPTOUT": {}
         },
@@ -236,14 +233,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [920, 6320]
+                "center": [920, 6320],
+                "jte_width": 10,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 13,
@@ -254,14 +248,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [4400, 6320]
+                "center": [4400, 6320],
+                "jte_width": 10,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 14,
@@ -272,9 +263,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [7880, 6320]
+                "center": [7880, 6320],
+                "jte_width": 10,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {}
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 15,
@@ -285,12 +278,12 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-8520, 4120]
+                "center": [-8520, 4120],
+                "jte_width": 30,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "GDSFILE": "resources/testpattern3_1.gds",
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 16,
@@ -301,12 +294,12 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-6320, 4120]
+                "center": [-6320, 4120],
+                "jte_width": 30,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "GDSFILE": "resources/testpattern3_2.gds",
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 17,
@@ -317,12 +310,11 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-4120, 4120]
+                "center": [-4120, 4120],
+                "jte_width": 30,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 18,
@@ -333,10 +325,13 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-1920, 4120]
+                "center": [-1920, 4120],
+                "jte_width": 30,
+                "pstop_width": 25
             },
             "LAYEROPTOUT": {}
         },
+
         {
             "NUM": 19,
             "NAME": "",
@@ -346,12 +341,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [920, 4120]
+                "center": [920, 4120],
+                "jte_width": 20,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 20,
@@ -362,12 +356,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [4400, 4120]
+                "center": [4400, 4120],
+                "jte_width": 20,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 21,
@@ -378,7 +371,9 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [7880, 4120]
+                "center": [7880, 4120],
+                "jte_width": 20,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         },
@@ -391,11 +386,11 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-8520, 1920]
+                "center": [-8520, 1920],
+                "jte_width": 40,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 23,
@@ -406,11 +401,11 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-6320, 1920]
+                "center": [-6320, 1920],
+                "jte_width": 40,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 24,
@@ -421,11 +416,11 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-4120, 1920]
+                "center": [-4120, 1920],
+                "jte_width": 40,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 25,
@@ -436,7 +431,9 @@
             "PARAMETERS": {
                 "nx": 1,
                 "ny": 1,
-                "center": [-1920, 1920]
+                "center": [-1920, 1920],
+                "jte_width": 40,
+                "pstop_width": 25
             },
             "LAYEROPTOUT": {}
         },
@@ -449,11 +446,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [920, 1920]
+                "center": [920, 1920],
+                "jte_width": 20,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 27,
@@ -464,11 +461,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [4400, 1920]
+                "center": [4400, 1920],
+                "jte_width": 20,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 28,
@@ -479,9 +476,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 1,
-                "center": [7880, 1920]
+                "center": [7880, 1920],
+                "jte_width": 20,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {}
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 29,
@@ -493,13 +492,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-8520, -920],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 30,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 30,
@@ -511,14 +508,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-6320, -920],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 30,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 31,
@@ -530,12 +524,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-4120, -920],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 40,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 32,
@@ -547,11 +540,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-1920, -920],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 40,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 33,
@@ -562,13 +555,12 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [920, -920]
+                "center": [920, -920],
+                "jte_width": 10,
+                "pstop_width": 10
+
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 34,
@@ -579,12 +571,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [4400, -920]
+                "center": [4400, -920],
+                "jte_width": 10,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 35,
@@ -595,7 +586,9 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [7880, -920]
+                "center": [7880, -920],
+                "jte_width": 10,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         },
@@ -609,13 +602,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-8520, -4400],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 30,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 37,
@@ -627,14 +618,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-6320, -4400],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 30,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "gain" : false,
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 38,
@@ -646,12 +634,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-4120, -4400],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 40,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 39,
@@ -663,11 +650,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-1920, -4400],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 40,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "guardring": false
-            }
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 40,
@@ -678,13 +665,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [920, -4400]
+                "center": [920, -4400],
+                "jte_width": 20,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 41,
@@ -695,13 +680,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [4400, -4400]
+                "center": [4400, -4400],
+                "jte_width": 20,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
-
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 42,
@@ -712,7 +695,9 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [7880, -4400]
+                "center": [7880, -4400],
+                "jte_width": 20,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         },
@@ -726,7 +711,9 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-8520, -7880],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 30,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         },
@@ -740,9 +727,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-6320, -7880],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 30,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {}
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 45,
@@ -754,7 +743,9 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-4120, -7880],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 40,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         },
@@ -768,9 +759,11 @@
                 "nx": 2,
                 "ny": 1,
                 "center": [-1920, -7880],
-                "rotation": 90
+                "rotation": 90,
+                "jte_width": 40,
+                "pstop_width": 20
             },
-            "LAYEROPTOUT": {}
+            "LAYEROPTOUT": {"gain" : false}
         },
         {
             "NUM": 47,
@@ -781,13 +774,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [920, -7880]
+                "center": [920, -7880],
+                "jte_width": 30,
+                "pstop_width": 10
             },
-            "LAYEROPTOUT": {
-                "jte": false,
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 48,
@@ -798,12 +789,11 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [4400, -7880]
+                "center": [4400, -7880],
+                "jte_width": 30,
+                "pstop_width": 15
             },
-            "LAYEROPTOUT": {
-                "pstop": false,
-                "guardring": false
-            }
+            "LAYEROPTOUT": {}
         },
         {
             "NUM": 49,
@@ -814,7 +804,9 @@
             "PARAMETERS": {
                 "nx": 2,
                 "ny": 2,
-                "center": [7880, -7880]
+                "center": [7880, -7880],
+                "jte_width": 30,
+                "pstop_width": 20
             },
             "LAYEROPTOUT": {}
         }
