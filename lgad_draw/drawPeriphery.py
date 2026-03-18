@@ -124,6 +124,7 @@ class DrawPeriphery:
 
         # metal (same width)
         metal = pg.boolean(rect_out, rect_in, operation='not', layer=layer_metal)
+        metal = pg.offset(metal, distance=3, join=self.join, tolerance=self.tol, layer=layer_metal)
         metal.simplify(self.tol)
 
         # oxide opening

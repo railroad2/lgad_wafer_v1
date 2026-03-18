@@ -1,7 +1,7 @@
 {
     "RETICLENAME": "F-1",
     "RETICLETYPE": "F-1",
-    "DESCRIPTION": "F with closest_pstop",
+    "DESCRIPTION": "F with fixed pstop_gap = 6 um and gr_gap = 9 um",
     "RETICLESIZE": [19140, 19140],
     "BOUNDMARGIN": [250, 250],
     "BLANKNAME" : true,
@@ -24,9 +24,11 @@
         "ny": 1,
         "center": [0, 0],
         "jte_width": 20,
-        "pstop_gap": 25,
+        "auto_pstop_gap": false,
+        "pstop_gap": 6,
         "pstop_width": 10,
-        "gr_gap": 25,
+        "auto_gr_gap": false,
+        "gr_gap": 9,
         "gr_width": [65, 105],
         "Nfg": 0,
         "fg_gap": [40, 20],
@@ -36,7 +38,6 @@
         "ild_width": 0,
         "nild": 0,
         "rounding": true,
-        "closest_pstop": true,
         "rotation": 0
     },
     "LAYERDEFAULT": {

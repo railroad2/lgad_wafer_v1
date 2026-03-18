@@ -9,12 +9,13 @@ class DrawSensor:
 
     def __new__(self, nx=1, ny=1, center=(0, 0),
                 jte_width=20, 
-                pstop_gap=10, pstop_width=10, 
-                gr_gap=10, gr_width=(65, 105), 
+                pstop_gap=None, pstop_width=10, 
+                gr_gap=None, gr_width=(65, 105), 
                 Nfg=0, fg_gap=(50, 10), fg_width=30,
                 edge_gap=80, ild_offset=1,
                 pad_offset=1280, pad_edge=2100,
                 dim_pad=None, dim_per=None,
+                auto_pstop_gap=None, auto_gr_gap=None,
                 closest_pstop=False,
                 nplus_extension=True,
                 gain=True, nplus=True, jte=True, padild=True, 
@@ -37,17 +38,41 @@ class DrawSensor:
             dim_pad = lg.DimPad()     
 
             dim_pad.jte_width = jte_width
-            #dim_pad.pstop_gap = pstop_gap
             dim_pad.pstop_width = pstop_width
             dim_pad.ild_offset = ild_offset
-            dim_pad.closest_pstop = closest_pstop
             dim_pad.nplus_extension = nplus_extension
+
+            # If a manual gap value is provided, use it unless the caller explicitly
+            # requests automatic calculation. This keeps JSON-driven wafer drawing
+            # intuitive when PARAMDEFAULT already contains pstop/gr gap values.
+            if auto_pstop_gap is None:
+                dim_pad.auto_pstop_gap = (pstop_gap is None)
+            else:
+                dim_pad.auto_pstop_gap = auto_pstop_gap
+
+            if auto_gr_gap is None:
+                dim_pad.auto_gr_gap = (gr_gap is None)
+            else:
+                dim_pad.auto_gr_gap = auto_gr_gap
+
+            if pstop_gap is not None:
+                dim_pad.manual_pstop_gap = pstop_gap
+
+            if gr_gap is not None:
+                dim_pad.manual_gr_gap = gr_gap
+
+            # Backward compatibility: the legacy preset forces fixed gap values.
+            if closest_pstop:
+                dim_pad.closest_pstop = True
+                dim_pad.auto_pstop_gap = False
+                dim_pad.auto_gr_gap = False
+                dim_pad.manual_pstop_gap = 6
+                dim_pad.manual_gr_gap = 9
 
         # set dimensions for periphery
         if dim_per is None:
             dim_per = lg.DimPeriphery(nx, ny, dim_pad)
 
-            dim_per.gr_gap = gr_gap
             dim_per.ild_offset = ild_offset
 
 
@@ -167,5 +192,3 @@ class DrawSensor:
             sensor.rotate(rotation)
 
         return sensor
-
-

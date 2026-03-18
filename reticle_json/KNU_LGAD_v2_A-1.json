@@ -1,8 +1,8 @@
 {
     "RETICLENAME": "A-1",
     "RETICLETYPE": "A-1",
-    "DESCRIPTION": ["A-FG0 with closest pstop and guard-ring.",
-                    "closest pstop grants that the pad-pstop gap is 6 um and pstop-GR gap is 12 um."],
+    "DESCRIPTION": ["A-FG0 with fixed pstop and guard-ring gaps.",
+                    "This setup uses pstop_gap = 6 um and gr_gap = 9 um."],
     "RETICLESIZE": [19140, 19140],
     "BOUNDMARGIN": [250, 250],
     "BLANKNAME" : true,
@@ -25,9 +25,11 @@
         "ny": 1,
         "center": [0, 0],
         "jte_width": 20,
-        "pstop_gap": 25,
+        "auto_pstop_gap": false,
+        "pstop_gap": 6,
         "pstop_width": 10,
-        "gr_gap": 25,
+        "auto_gr_gap": false,
+        "gr_gap": 9,
         "gr_width": [65, 105],
         "Nfg": 0,
         "fg_gap": [40, 20],
@@ -36,8 +38,7 @@
         "ild_offset": 5, 
         "ild_width": 5,
         "rounding": true,
-        "rotation": 0,
-        "closest_pstop": true
+        "rotation": 0
     },
     "LAYERDEFAULT": {
         "gain": true,

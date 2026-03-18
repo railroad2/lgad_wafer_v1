@@ -74,8 +74,10 @@ def make():
             "ny"         : 1,
             "center"     : [0, 0],
             "jte_width"  : 20,
+            "auto_pstop_gap": False,
             "pstop_gap"  : 25,
             "pstop_width": 10,
+            "auto_gr_gap": False,
             "gr_gap"     : 25,
             "gr_width"   : [65, 105],
             "Nfg"        : 0,
@@ -112,7 +114,9 @@ def make():
                 "nx": 1,
                 "ny": 1,
                 "center": [0, 0],
-                "jte_width": 20
+                "jte_width": 20,
+                "pstop_gap": 25,
+                "gr_gap": 25
             },
             "LAYEROPTOUT": {
             }
@@ -143,7 +147,9 @@ def make():
             dic_sensor["PARAMETERS"] = {
                 "nx": nx,
                 "ny": ny,
-                "center": dic_sensor["CENTER"]
+                "center": dic_sensor["CENTER"],
+                "pstop_gap": dic["PARAMDEFAULT"]["pstop_gap"],
+                "gr_gap": dic["PARAMDEFAULT"]["gr_gap"]
             }
 
             if rotation:
@@ -164,4 +170,3 @@ def make():
 
 if __name__=="__main__":
     make()
-
