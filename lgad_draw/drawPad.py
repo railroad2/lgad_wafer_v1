@@ -194,8 +194,8 @@ class DrawPad:
         if self.dim_pad.nplus_extension:
             size = self.dim_pad.jte_size 
         else:
-            size = (self.dim_pad.nplus_size[0] - 30, self.dim_pad.nplus_size[1]-30)
-            print (size)
+            size = (self.dim_pad.nplus_size[0] - self.dim_pad.jte_width - 20, 
+                    self.dim_pad.nplus_size[1] - self.dim_pad.jte_width - 20)
 
         center = self.dim_pad.padmetal_center
         optwin_N = self.dim_pad.optwin_N
